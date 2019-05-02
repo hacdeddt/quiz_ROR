@@ -25,7 +25,9 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'figaro'
 gem 'devise', '~> 4.6', '>= 4.6.2'
-gem 'rails_email_validator'
+gem 'omniauth', '~> 1.9'
+gem 'omniauth-google-oauth2', '~> 0.6.1'
+gem 'omniauth-facebook', '~> 5.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

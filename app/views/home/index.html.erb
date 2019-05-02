@@ -1,3 +1,4 @@
-<h1>Hello world!</h1>
+<h1>Xin chào, <%= current_user.fullName %></h1>
 <%= link_to "Change your password", edit_user_registration_path %>
 <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<%= image_tag(current_user.image) %>
