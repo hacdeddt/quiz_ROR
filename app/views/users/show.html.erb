@@ -10,8 +10,8 @@
 	              <%= image_tag(@user.image.url, width: "100px", height: "100px") %>
 	            <% end %>
 				<h4>Thông tin cá nhân:</h4>
-				<% if (current_user.id == @user.id || current_user.admin?) %> 
-					<%= link_to "Chỉnh sửa", edit_user_path(current_user.id) %>
+				<% if current_user.role == true || current_user.id == @user.id %> 
+					<%= link_to "Chỉnh sửa", edit_user_path(@user.id) %>
 				<% end %>
 				<table class="table">
 					<tr>

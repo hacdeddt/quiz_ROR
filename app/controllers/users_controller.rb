@@ -13,15 +13,27 @@ class UsersController < ApplicationController
 
 	def update
 		authorize @user
-		respond_to do |format|
-			if @user.update(user_params)
-				format.html { redirect_to user_path, notice: 'User was successfully updated.' }
-				format.json { render :show, status: :ok, location: @user }
-			else
-				format.html { render :edit }
-				format.json { render json: @user.errors, status: :unprocessable_entity }
+		authorize current_user
+		if (current_user.role)
+			respond_to do |format|
+				if @user.update(user_admin_params)
+					format.html { redirect_to user_path, notice: 'User was successfully updated.' }
+					format.json { render :show, status: :ok, location: @user }
+				else
+					format.html { render :edit }
+					format.json { render json: @user.errors, status: :unprocessable_entity }
+				end
 			end
-
+		else
+			respond_to do |format|
+				if @user.update(user_params)
+					format.html { redirect_to user_path, notice: 'User was successfully updated.' }
+					format.json { render :show, status: :ok, location: @user }
+				else
+					format.html { render :edit }
+					format.json { render json: @user.errors, status: :unprocessable_entity }
+				end
+			end
 		end
 	end
 
@@ -29,6 +41,10 @@ class UsersController < ApplicationController
 
 	def user_params
 			params.require(:user).permit(:fullName, :gender, :year_birthday, :address, :image)
+	end
+
+	def user_admin_params
+			params.require(:user).permit(:fullName, :gender, :year_birthday, :address, :image, :role)
 	end
 
 	def set_user

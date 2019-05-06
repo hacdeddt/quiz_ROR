@@ -36,7 +36,7 @@
 						<label>Địa chỉ:</label>
 						<%= f.text_field :address, autocomplete: "on", placeholder: "Địa chỉ", class: "form-control" %>
 					</div>
-					<% if current_user.admin? %>
+					<% if current_user.role %>
 					<div class="checkbox">
 						<label>
 							<%= f.check_box :role, class: "checkbox" %> Administrator
