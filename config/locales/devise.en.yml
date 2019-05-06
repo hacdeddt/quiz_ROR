@@ -3,13 +3,13 @@
 en:
   devise:
     confirmations:
-      confirmed: "Your email address has been successfully confirmed."
-      send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
+      confirmed: "Địa chỉ email của bản đã được xác nhận thành công"
+      send_instructions: "Bạn sẽ nhận được một email hướng dẫn để xác nhận tài khoản của bạn trong vòng 1 vài phút nữa"
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes."
     failure:
-      already_authenticated: "You are already signed in."
+      already_authenticated: "Bạn đã đăng nhập."
       inactive: "Your account is not activated yet."
-      invalid: "Invalid %{authentication_keys} or password."
+      invalid: "%{authentication_keys} hoặc mật khẩu không hợp lệ."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Invalid %{authentication_keys} or password."
@@ -52,14 +52,14 @@ en:
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
-      unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+      unlocked: "Tài khoản của bạn đã mở khóa thành công, vui lòng đăng nhập để tiếp tục."
   errors:
     messages:
-      already_confirmed: "was already confirmed, please try signing in"
-      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
-      expired: "has expired, please request a new one"
-      not_found: "not found"
-      not_locked: "was not locked"
+      already_confirmed: "đã được xác nhận, vui lòng thử đăng nhập"
+      confirmation_period_expired: "Cần thiết để xác nhận trong %{period}, vui lòng yêu cầu một cái mới"
+      expired: "Đã hết hạn, vui lòng yêu cầu một cái mới"
+      not_found: "Không tìm thấy"
+      not_locked: "Không bị khóa"
       not_saved:
-        one: "1 error prohibited this %{resource} from being saved:"
-        other: "%{count} errors prohibited this %{resource} from being saved:"
+        one: "Có 1 lỗi xảy ra:"
+        other: "Có %{count} lỗi xảy ra:"

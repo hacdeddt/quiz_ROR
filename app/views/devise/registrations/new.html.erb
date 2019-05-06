@@ -1,29 +1,76 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<% provide(:title, "Đăng Ký") %>
+<div class="content-feature">
+  <h3>Một vài chức năng của trang: </h3>
+  <ul>
+    <li>Cho phép người dùng làm các thi trắc nghiệm.</li>
+    <li>Cho phép người dùng tự tạo các bài thi trắc nghiệm của mình.</li>
+    <li>Mọi thứ đều miễn phí.</li>
+  </ul>
+  <div style="font-size: 15px;width: 600px;">
+    <%= render "devise/shared/error_messages", resource: resource %>
+  </div>
+</div>
+  <div class="cover-form-login">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <div class="right">
+        <br>
+              <div class="text-center">
+                <%= link_to user_facebook_omniauth_authorize_path do%> 
+                      <%= image_tag("login_face.png") %>
+                    <% end %>
+                <h3>Đăng Ký</h3>
+              </div>  
+            <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Địa chỉ Email:</label>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>                
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Mật khẩu: (tối thiểu 8 ký tự và gồm ít nhất 1 chữ hoa, 1 chữ thường, 1 số)</label>
+                  <%= f.password_field :password, autocomplete: "off", placeholder: "Mật khẩu", class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Xác nhận mật khẩu:</label>
+                  <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Xác nhận mật khẩu", class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <label>Họ tên:</label>
+                  <%= f.text_field :fullName, autocomplete: "on", placeholder: "Họ và tên", class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <label>Giới tính:</label><span style="margin-left: 10px;" ></span>
+                  <label class="radio-inline">
+                    <%= radio_button("user", "gender", "male") %> Nam
+                  </label>
+                  <label class="radio-inline">
+                    <%= radio_button("user", "gender", "female") %> Nữ
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>Ngày sinh:</label>
+                  <%= f.date_field :year_birthday, autocomplete: "on", class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <label>Địa chỉ:</label>
+                  <%= f.text_field :address, autocomplete: "on", placeholder: "Địa chỉ", class: "form-control" %>
+                </div>
+                <div class="text-center">
+                  <div class="form-group">
+                    <%= f.submit "Tạo tài khoản", class: "btn btn-primary" %>
+                  </div>
+                </div>
+            </div>
+            <div class="card-footer">
+              <div class="text-center">
+                <div class="d-flex justify-content-center links font_weight">
+                  <%= link_to "Đăng nhập", new_session_path(resource_name) %>
+                </div>
+              </div>
+            </div>
+          </div>
+    <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
 
-<%= render "devise/shared/links" %>

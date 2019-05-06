@@ -1,26 +1,60 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
+<% provide(:title, "Đăng Nhập") %>
+<div class="content-feature">
+  <h3>Một vài chức năng của trang: </h3>
+  <ul>
+    <li>Cho phép người dùng làm các thi trắc nghiệm.</li>
+    <li>Cho phép người dùng tự tạo các bài thi trắc nghiệm của mình.</li>
+    <li>Mọi thứ đều miễn phí.</li>
+  </ul>
+</div>
+<div class="cover-form-login">
+  <%= form_for(resource, as: resource_name, class: "form-horizontal", url: session_path(resource_name)) do |f| %>
+    <div class="right">
+            <div class="text-center">
+              <%= link_to user_facebook_omniauth_authorize_path do%> 
+                    <%= image_tag("login_face.png") %>
+                  <% end %>
+              <h3>Đăng Nhập</h3>
+            </div>  
+          <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Địa chỉ Email:</label>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>                
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Mật khẩu:</label>
+                <%= f.password_field :password, autocomplete: "current-password", placeholder: "Mật khẩu", class: "form-control" %>
+              </div>
+              <div class="text-center">
+                <% if devise_mapping.rememberable? %>
+                  <div class="checkbox">
+                    <label>
+                      <%= f.check_box :remember_me %>
+                      <span class="font_weight">Giữ tôi luôn đăng nhập</span>
+                    </label>
+                  </div>
+                <%end %>
+                <div class="form-group">
+                  <%= f.submit "Đăng nhập", class: "btn btn-primary" %>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <div class="text-center">
+              <div class="d-flex justify-content-center links font_weight">
+                Bạn chưa có tài khoản? <%= link_to "Tạo tài khoản", new_registration_path(resource_name) %>
+              </div>
+              <div class="d-flex justify-content-center font_weight links">
+                <%= link_to "Bạn quên mật khẩu?", new_password_path(resource_name) %>
+              </div>
+              <div class="d-flex justify-content-center font_weight links">
+                <%= link_to "Chưa nhận được Email xác nhận?", new_confirmation_path(resource_name) %>
+              </div>
+              <div class="d-flex justify-content-center font_weight links">
+                <%= link_to "Chưa nhận được Email mở khóa tài khoản?", new_unlock_path(resource_name) %>
+              </div>
+            </div>
+          </div>
+        </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

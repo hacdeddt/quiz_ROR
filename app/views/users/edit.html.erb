@@ -1,0 +1,57 @@
+<div class="">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-xs-12" style="overflow: hidden;">
+				<h4 class="box-title">Cập nhật thông tin cá nhân</h4>
+				<%= form_with(model: @user, local: true) do |f| %>
+					<% if @user.errors.any? %>
+					<div id="error_explanation" class="alert alert-danger">
+						<h4> Có <%= pluralize(@user.errors.count, "lỗi") %> xảy ra: </h4>
+
+						<ul>
+							<% @user.errors.full_messages.each do |message| %>
+							<li><%= message %></li>
+							<% end %>
+						</ul>
+					</div>
+					<% end %>
+					<div class="form-group">
+						<label>Họ tên:</label>
+						<%= f.text_field :fullName, autocomplete: "on", placeholder: "Họ và tên", class: "form-control" %>
+					</div>
+					<div class="form-group">
+						<label>Giới tính:</label><span style="margin-left: 10px;" ></span>
+						<label class="radio-inline">
+							<%= radio_button("user", "gender", "male") %> Nam
+						</label>
+						<label class="radio-inline">
+							<%= radio_button("user", "gender", "female") %> Nữ
+						</label>
+					</div>
+					<div class="form-group">
+						<label>Ngày sinh:</label>
+						<%= f.date_field :year_birthday, autocomplete: "on", class: "form-control" %>
+					</div>
+					<div class="form-group">
+						<label>Địa chỉ:</label>
+						<%= f.text_field :address, autocomplete: "on", placeholder: "Địa chỉ", class: "form-control" %>
+					</div>
+					<% if current_user.admin? %>
+					<div class="checkbox">
+						<label>
+							<%= f.check_box :role, class: "checkbox" %> Administrator
+						</label>
+					</div>
+					<%end %>
+					<div class="form-group">
+		        		<label >Ảnh đại diện</label>
+		        		<%= f.file_field (:image), id: :user_image %>
+		        	</div>
+					<div class="form-group" style="text-align: center;">
+						<%= f.submit 'Cập nhật',class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

@@ -4,7 +4,37 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable,
-         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
+         :omniauthable, omniauth_providers: [:facebook]
+
+  mount_uploader :image, AvatarUploader, :dependent => :destroy
+
+  HUMANIZED_ATTRIBUTES = {
+    :fullName => "Họ tên",
+    :year_birthday => "Ngày sinh",
+    :address => "Địa chỉ",
+    :gender => "Giới tính",
+    :password => "Mật khẩu",
+    :image => "Ảnh đại diện"
+  }
+
+  def self.human_attribute_name(attr, options = {})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
+
+    validates :fullName, format: { with: /\A[\p{alpha}\s]+\z/,
+    message: "không được để trống và chỉ bao gồm chữ cái" }
+
+    validates :gender, presence: {message: "chưa được chọn"}
+
+    validates :year_birthday, presence: {message: "chưa được chọn"}
+
+    validates :address, format: { with: /\A[\p{Word}\d\s+-_,]+\z/, 
+    #\A là bắt đầu chuỗi, \z là kết thúc chuỗi, \s là khoẳng trắng, \p{Word} là bao gồm các chữ cái và số
+    message: "không được để trống và chỉ bao gồm chữ và số"}
+
+    validates_processing_of :image
+    validate :image_size_validation
+
 
   validate :password_complexity
 
@@ -12,6 +42,12 @@ class User < ApplicationRecord
     if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/)
       errors.add :password, "phải có ít nhất một chữ hoa, một chữ thường và một số!"
     end
+  end
+
+  
+ 
+  def image_size_validation
+    errors[:image] << "Nên nhỏ hơn 1MB" if image.size > 1.megabytes
   end
 
   def self.new_with_session params, session
@@ -26,15 +62,32 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 	    user.email = auth.info.email
-	    user.password = Devise.friendly_token #generate a string random has length = 20
 	    user.fullName = auth.info.name   # assuming the user model has a name
-	    user.image = auth.info.image # assuming the user model has an image
-	    user.year_birthday = auth.extra.raw_info.birthday
-	    user.gender = auth.extra.raw_info.gender
-	    user.address = auth.extra.raw_info.location.name
+	    user.remote_image_url = auth.info.image # assuming the user model has an image
+	    user.year_birthday = auth.extra.raw_info.birthday if auth.extra.raw_info.birthday.present?
+	    user.gender = auth.extra.raw_info.gender if auth.extra.raw_info.gender.present?
+	    user.address = auth.extra.raw_info.location.name if auth.extra.raw_info.location.present?
 	    # If you are using confirmable and the provider(s) you use validate emails, 
 	    # uncomment the line below to skip the confirmation emails.
+      
 	    user.skip_confirmation!
 	  end
-	end
+  end
+
+  def password_required?
+  	super && provider.blank?
+  end
+
+  def update_with_password(params, *option)
+  	if encrypted_password.blank?
+  		update_attributes(params, *option)
+  	else
+  		super
+  	end
+  end
+
+  def admin?
+    role == 1
+  end
+
 end

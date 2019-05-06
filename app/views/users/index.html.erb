@@ -1,0 +1,45 @@
+<%= provide(:title, current_user.fullName)%>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-4">
+			<div class="table-personal-information">
+
+            	<% if current_user.image.file.nil? %>
+	              <%= image_tag("avatar.png", width: "100px", height: "100px") %>
+	            <% else %>
+	              <% begin %>
+	              	<%= image_tag(current_user.image_identifier, width: "100px", height: "100px") %>
+	              <% rescue %>
+	                <%= image_tag(current_user.image.url, width: "100px", height: "100px") %>
+	              <% end %>
+	            <% end %>
+
+				<h4>Thông tin cá nhân:</h4>
+				<%= link_to "Chỉnh sửa", edit_user_path(current_user.id) %>
+				<table class="table">
+					<tr>
+						<th>Họ tên: </th>
+						<td colspan="2"><%= current_user.fullName %></td>
+					</tr>
+					<tr>
+						<th>Giới tính: </th>
+						<td colspan="2"><%= gender_user(current_user.gender) %></td>
+					</tr>
+					<tr>
+						<th>Ngày sinh: </th>
+						<td colspan="2"><%= current_user.year_birthday.strftime('%d/%m/%Y') if !current_user.year_birthday.nil? %></td>
+					</tr>
+					<tr>
+						<th>Địa chỉ: </th>
+						<td colspan="2"><%= current_user.address %></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-8">
+			<div class="table-personal-information table-post-user">
+				<h2>Bai trac nghiem user da lam</h2>
+			</div>
+		</div>
+	</div>
+</div>

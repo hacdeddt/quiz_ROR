@@ -1,25 +1,35 @@
-<h2>Change your password</h2>
+  <div class="cover-form-login send-mail">
+    <div class="right">
+      <br>
+      <div class="text-center">
+        <h3>Đổi Mật Khẩu</h3>
+      </div>  
+      <div class="card-body">
+       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+        <%= f.hidden_field :reset_password_token %>
+  
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mật khẩu: (tối thiểu 8 ký tự và gồm ít nhất 1 chữ hoa, 1 chữ thường, 1 số)</label>
+          <%= f.password_field :password, autocomplete: "off", placeholder: "Mật khẩu", class: "form-control" %>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Xác nhận mật khẩu:</label>
+          <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Xác nhận mật khẩu", class: "form-control" %>
+        </div>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+        <div class="text-center">
+          <div class="form-group">
+            <%= f.submit "Đổi mật khẩu", class: "btn btn-primary" %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <div class="text-center">
+        <%= link_to "Đăng nhập", new_session_path(resource_name) %>
+      </div>
+    </div>
+    
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>

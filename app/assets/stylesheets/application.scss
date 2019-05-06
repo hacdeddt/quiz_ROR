@@ -1,0 +1,161 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+	background-image: url('background1.png');
+	background-size: cover;
+	background-repeat: repeat;
+	height: 100%;
+	font-family: 'Numans', sans-serif;
+	font-size: 15px;
+}
+
+.cover-form-login
+{
+	margin-top: 5px;
+	float:right;
+	background: black;
+	opacity: 0.9;
+	width: 500px;
+	height: 100%;
+	z-index: 1;
+	border: 1px solid black;
+	border-radius: 4px;
+	color: white;
+	padding:15px;
+	margin-bottom: 20px;
+}
+.cover-form-login a{
+	color: blue;
+}
+
+.cover-form-login a:hover{
+	color: white;
+}
+
+.logo-login {
+	margin-top: 10px;
+	margin-left: 30px;
+}
+
+.bg-danger {
+    background-color: #d61d1d !important;
+    border-radius: 2px;
+    text-align: center;
+}
+
+.content-feature {
+	color: black;
+	font-weight: 600;
+	font-size: 17px;
+	margin-top: 50px;
+	float: left;
+}
+
+.send-mail {
+	float: left;
+	margin-left: 300px;
+}
+
+.logo-size {
+	margin-top: 3px;
+	width: 160px;
+	height: 50px;
+}
+
+.link-in-navbar img{
+	width: 50px;
+	height: 50px;
+	padding:0px;
+	border-radius: 50%;
+}
+
+.navbar {
+	border-radius: 0px !important;
+	height: 57px;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus
+{
+	height: 56px;
+}
+
+.link-in-navbar {
+    margin-top: 13px;
+    padding: 3px 10px !important;
+}
+
+.user-page {
+	margin-top:-13px;
+}
+
+.navbar-fixed {
+	position: fixed;
+  	top: 0;
+}
+
+.table-personal-information {
+	background: white;
+	height: 100%;
+	padding:15px;
+	border: 1px solid #c9c5c5;
+	z-index: 1;
+	border-radius: 2px;
+	text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+	.cover-form-login {
+		width: 100%;
+	}
+	.send-mail {
+		margin-left: 0px;
+	}
+
+	.logo-size {
+		width: 105px;
+		height: 50px;
+	}
+	.input-search
+	{
+		width: 48% !important; 
+		margin-top: -17px;
+		margin-left: 99px;
+	}
+	.button-search{
+		margin-top: -67px;
+    	margin-left: 236px;
+    	display: none;
+	}
+
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		margin-top: -37px;
+		border: 0px !important;
+	}
+
+	.table-post-user {
+		margin-top:20px;
+	}
+
+	.nav-toggle-in-mobile {
+		background: #000000;
+    	margin-top: 30px;
+	}
+}
+
