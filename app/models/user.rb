@@ -78,12 +78,13 @@ class User < ApplicationRecord
   	super && provider.blank?
   end
 
-  def update_with_password(params, *option)
-  	if encrypted_password.blank?
-  		update_attributes(params, *option)
-  	else
-  		super
-  	end
-  end
+# Đổi mật khẩu cho những người dùng đăng nhập bằng facebook, tức là không có mật khẩu.
+  # def update_with_password(params, *option)
+  # 	if encrypted_password.blank?
+  # 		update_attributes(params, *option)
+  # 	else
+  # 		super
+  # 	end
+  # end
 
 end

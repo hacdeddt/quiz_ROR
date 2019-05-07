@@ -1,5 +1,5 @@
 class UserPolicy < ApplicationPolicy
-  attr_reader :user, :post
+  attr_reader :user, :current_user
 
   def initialize(user, current_user)
     @user = user

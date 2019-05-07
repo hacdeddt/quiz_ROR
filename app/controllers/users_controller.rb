@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_user, only: [:edit, :update, :show, :update_image]
+	before_action :set_user, only: [:edit, :update, :show]
 
 	def edit
 		authorize @user
