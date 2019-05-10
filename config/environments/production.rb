@@ -91,4 +91,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # remove class field_with_errors cho khong loi giao dien
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    html_tag.html_safe
+  end
 end

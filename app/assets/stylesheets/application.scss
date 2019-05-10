@@ -11,18 +11,19 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require toastr
  *= require_self
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import url('https://fonts.googleapis.com/css?family=Numans');
+@import "toastr";
 
 html,body{
 	background-image: url('background1.png');
 	background-size: cover;
 	background-repeat: repeat;
 	height: 100%;
-	font-family: 'Numans', sans-serif;
+	font-family: sans-serif;
 	font-size: 15px;
 }
 
@@ -33,7 +34,6 @@ html,body{
 	background: black;
 	opacity: 0.9;
 	width: 500px;
-	height: 100%;
 	z-index: 1;
 	border: 1px solid black;
 	border-radius: 4px;
@@ -120,6 +120,14 @@ html,body{
 	text-align: center;
 }
 
+.container-form {
+	background: #f5f6f7;
+	padding: 2em;
+	border: 1px solid #f3f5e8;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
 @media only screen and (max-width: 600px) {
 	.cover-form-login {
 		width: 100%;
@@ -157,5 +165,10 @@ html,body{
 		background: #000000;
     	margin-top: 30px;
 	}
+
+	.container-form { 
+		padding: 0.3em;
+	}
+
 }
 

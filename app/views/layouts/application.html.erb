@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= maketitle(yield(:title)) %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" type="image/ico" href="/assets/favicon.ico"/>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title><%= maketitle(yield(:title)) %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="shortcut icon" type="image/ico" href="/assets/favicon.ico"/>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
-     <!--Fontawesome CDN-->
-  </head>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <% if !user_signed_in? %>
-      <div class="logo-login">
-        <%= link_to root_path do %>
-                <%= image_tag("logo.png", width: "160px", height: "60px") %>
-        <% end %>
-      </div>
-    <% else %>
-      <%= render partial: "layouts/navbar" %>
-      <div class="margin-top-content">
-      </div>
-    <%end %>
-    
-    <div class='container'>
-      <% if notice.present? %>
-        <div class="alert alert-success"><%= notice %></div>
-      <% end %>
-      <% if alert.present? %>
-        <div class="alert alert-danger"><%= alert %></div>
-      <% end %>
-      <%= yield %>
-    </div>
-  </body>
+<body>
+  <% if !user_signed_in? %>
+  <div class="logo-login">
+    <%= link_to root_path do %>
+    <%= image_tag("logo.png", width: "160px", height: "60px") %>
+    <% end %>
+  </div>
+  <% else %>
+  <%= render partial: "layouts/navbar" %>
+  <div class="margin-top-content">
+  </div>
+  <%end %>
+  <%= custom_bootstrap_flash %> 
+  <div class="container">   
+    <%= yield %>
+  </div>
+</div>
+</body>
 </html>

@@ -1,0 +1,41 @@
+<h1>Cau hoi</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>option1</th>
+      <th>option2</th>
+      <th>option3</th>
+      <th>option4</th>
+      <th>option match</th>
+      <th>answer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @qbanks.each do |q| %>
+    	<% if (!q.is_delete && q.accept) || current_user.role %>
+	      <tr>
+	        <td><%= raw q.question %></td>
+	        <td><%= raw q.option1 %></td>
+	        <td><%= raw q.option2 %></td>
+	        <td><%= raw q.option3 %></td>
+	        <td><%= raw q.option4 %></td>
+	        <td><%= q.option_match %></td>
+	        <td><%= q.answer %></td>
+	        <td><%= link_to 'Show', user_qbank_path(current_user, q) %></td>
+	        <td><%= link_to 'Edit', edit_user_qbank_path(current_user, q) %></td>
+	        <td><a data-confirm="Are you sure?" rel="nofollow" data-method="put" href="/qbanks/delete/<%= q.id %>">Destroy</a></td>
+	        <% if current_user.role %>
+	        	<td><%= link_to 'delete', user_qbank_path(current_user, q), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	        <% end %>
+	      </tr>
+	    <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<td><%= link_to 'Thêm câu hỏi', new_user_qbank_path(current_user) %></td>

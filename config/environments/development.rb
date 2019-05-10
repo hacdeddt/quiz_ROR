@@ -73,4 +73,8 @@ Rails.application.configure do
       :password           => ENV['GMAIL_PASSWORD'],
       :enable_starttls_auto => true
     }
+
+    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+      html_tag.html_safe
+    end
 end

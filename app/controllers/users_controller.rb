@@ -14,25 +14,13 @@ class UsersController < ApplicationController
 	def update
 		authorize @user
 		authorize current_user
-		if (current_user.role)
-			respond_to do |format|
-				if @user.update(user_admin_params)
-					format.html { redirect_to user_path, notice: 'User was successfully updated.' }
-					format.json { render :show, status: :ok, location: @user }
-				else
-					format.html { render :edit }
-					format.json { render json: @user.errors, status: :unprocessable_entity }
-				end
-			end
-		else
-			respond_to do |format|
-				if @user.update(user_params)
-					format.html { redirect_to user_path, notice: 'User was successfully updated.' }
-					format.json { render :show, status: :ok, location: @user }
-				else
-					format.html { render :edit }
-					format.json { render json: @user.errors, status: :unprocessable_entity }
-				end
+		respond_to do |format|
+			if @user.update(user_params)
+				format.html { redirect_to user_path, notice: 'Thông tin cá nhân của bạn đã được cập nhật thành công!' }
+				format.json { render :show, status: :ok, location: @user }
+			else
+				format.html { render :edit }
+				format.json { render json: @user.errors, status: :unprocessable_entity }
 			end
 		end
 	end
@@ -40,11 +28,11 @@ class UsersController < ApplicationController
 	private
 
 	def user_params
-			params.require(:user).permit(:fullName, :gender, :year_birthday, :address, :image)
-	end
-
-	def user_admin_params
+		if current_user.role
 			params.require(:user).permit(:fullName, :gender, :year_birthday, :address, :image, :role)
+		else
+			params.require(:user).permit(:fullName, :gender, :year_birthday, :address, :image)
+		end
 	end
 
 	def set_user

@@ -31,6 +31,11 @@ gem 'bootstrap-sass', '3.4.1'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'pundit', '~> 2.0', '>= 2.0.1'
+gem "recaptcha", require: "recaptcha/rails"
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
+gem 'ckeditor', '= 4.2.2'
+gem 'mini_magick'
 
 
 

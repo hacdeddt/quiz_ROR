@@ -31,3 +31,30 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        email: "Địa chỉ Email"
+      qbank:
+        category: "Lớp"
+        subject: "Môn học"
+    errors:
+      template:
+        header:
+          one:   "1 lỗi đã xảy ra"
+          other: "%{count} lỗi đã xảy ra"
+        body:    "There were problems with the following fields:"
+      models:
+        qbank:
+          attributes:
+            category:
+              required: "chưa được chọn"
+            subject:
+              required: "chưa được chọn"
+        user:
+          attributes:
+            email:
+              blank: "không được để trống"
+            password:
+              blank: "không được để trống"
+

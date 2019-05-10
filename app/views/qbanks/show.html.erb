@@ -1,0 +1,57 @@
+<h1>Chi tiết câu hỏi</h1>
+<table class="table">
+	<tr>
+		<td>ID: </td>
+		<td><%= @qbank.id %></td>
+	</tr>
+	<tr>
+		<td>Question: </td>
+		<td><%= @qbank.question %></td>
+	</tr>
+	<tr>
+		<td>Option1: </td>
+		<td><%= @qbank.option1 %></td>
+	</tr>
+	<tr>
+		<td>Option2: </td>
+		<td><%= @qbank.option2 %></td>
+	</tr>
+	<tr>
+		<td>Option3: </td>
+		<td><%= @qbank.option3 %></td>
+	</tr>
+	<tr>
+		<td>Option4: </td>
+		<td><%= @qbank.option4 %></td>
+	</tr>
+	<tr>
+		<td>Option Match: </td>
+		<td><%= @qbank.option_match %></td>
+	</tr>
+	<tr>
+		<td>Answer: </td>
+		<td><%= @qbank.answer %></td>
+	</tr>
+	<tr>
+		<td>image: </td>
+		<td><%= @qbank.image %></td>
+	</tr>
+	<tr>
+		<td>mp3: </td>
+		<td><%= @qbank.mp3 %></td>
+	</tr>
+	<tr>
+		<td>Nguoi dang: </td>
+		<td><%= @qbank.user.fullName %></td>
+	</tr>
+	<tr>
+		<td>lop: </td>
+		<td><%= @qbank.category.name %></td>
+	</tr>
+	<tr>
+		<td>mon hoc: </td>
+		<td><%= @qbank.subject.name %></td>
+	</tr>
+
+</table>
+

@@ -16,19 +16,19 @@
 				<table class="table">
 					<tr>
 						<th>Họ tên: </th>
-						<td colspan="2"><%= @user.fullName %></td>
+						<td ><%= @user.fullName %></td>
 					</tr>
 					<tr>
 						<th>Giới tính: </th>
-						<td colspan="2"><%= gender_user(@user.gender) %></td>
+						<td><%= gender_user(@user.gender) %></td>
 					</tr>
 					<tr>
 						<th>Ngày sinh: </th>
-						<td colspan="2"><%= @user.year_birthday.strftime('%d/%m/%Y') if !@user.year_birthday.nil? %></td>
+						<td ><%= @user.year_birthday.strftime('%d/%m/%Y') if !@user.year_birthday.nil? %></td>
 					</tr>
 					<tr>
 						<th>Địa chỉ: </th>
-						<td colspan="2"><%= @user.address %></td>
+						<td ><%= @user.address %></td>
 					</tr>
 				</table>
 			</div>
