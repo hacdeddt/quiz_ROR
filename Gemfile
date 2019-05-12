@@ -23,20 +23,46 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
+# gem tạo các biến môi trường
 gem 'figaro'
+#gem dùng để xác thực
 gem 'devise', '~> 4.6', '>= 4.6.2'
+#gem dùng để xác thực bằng facebook
 gem 'omniauth', '~> 1.9'
 gem 'omniauth-facebook', '~> 5.0'
+
 gem 'bootstrap-sass', '3.4.1'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
+#gem dùng để upload ảnh và file, kết hợp với cả ckeditor
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
-gem 'pundit', '~> 2.0', '>= 2.0.1'
-gem "recaptcha", require: "recaptcha/rails"
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
-gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
 gem 'ckeditor', '= 4.2.2'
 gem 'mini_magick'
+#gem dùng để phân quyền
+gem 'pundit', '~> 2.0', '>= 2.0.1'
+#gem dùng để tạo captcha
+gem "recaptcha", require: "recaptcha/rails"
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+#gem dùng để tạo các notification xuất hiện rồi biến mất
+gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
 
+gem 'active_storage_validations' #validation in active storage
+# gem dùng để import file excel
+gem 'roo', '~> 2.8', '>= 2.8.2'
+#gem dùng để import nhanh hơn
+gem 'activerecord-import'
+#gem dùng để test xem query có bị N+1 không
+gem 'bullet', '~> 6.0'
+# gem dùng để validation sử dụng jquery
+gem 'jquery-validation-rails'
+# gem dùng để phân trang
+gem 'will_paginate', '~> 3.1', '>= 3.1.7'
+gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2'
+# thêm vào để sửa 1 vài lỗi ExecJS :: RuntimeError
+gem 'therubyracer', '~> 0.12.3'
+# kiểm tra các bản vá, bản cập nhật của gem
+gem 'bundler-audit', '~> 0.6.1'
+# font-awesome
+gem 'font-awesome-sass'
 
 
 # Use Redis adapter to run Action Cable in production
@@ -66,6 +92,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  #gem use to check security for app
+  gem 'brakeman', '~> 4.5', '>= 4.5.1'
 end
 
 group :test do

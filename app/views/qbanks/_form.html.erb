@@ -22,30 +22,35 @@
            <div class="form-group">
             <label>Tùy chọn 1: </label>
             <%= radio_button("qbank", "option_match", "A") %> Chọn đây là đáp án đúng
-            <%= f.text_field :option1, autocomplete: "on", placeholder: "", class: "form-control" %>
+            <%= f.text_field :optionA, autocomplete: "on", placeholder: "", class: "form-control" %>
           </div>
 
            <div class="form-group">
             <label>Tùy chọn 2: </label>
             <%= radio_button("qbank", "option_match", "B") %> Chọn đây là đáp án đúng
-            <%= f.text_field :option2, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
+            <%= f.text_field :optionB, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
           </div>
 
            <div class="form-group">
             <label>Tùy chọn 3: </label>
             <%= radio_button("qbank", "option_match", "C") %> Chọn đây là đáp án đúng
-            <%= f.text_field :option3, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
+            <%= f.text_field :optionC, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
           </div>
 
            <div class="form-group">
             <label>Tùy chọn 4: </label>
             <%= radio_button("qbank", "option_match", "D") %> Chọn đây là đáp án đúng
-            <%= f.text_field :option4, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
+            <%= f.text_field :optionD, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
           </div>
 
-           <div class="form-group">
-            <label>Đáp án chi tiết:</label>
+          <div class="form-group">
+            <label>Đáp án chi tiết (nếu có):</label>
             <%= f.text_field :answer, autocomplete: "on", placeholder: "Câu hỏi", class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label>File âm thanh (nếu có):</label>
+            <%= f.file_field :mp3, class: "form-control-file" %>
           </div>
 
           <div class="form-group">

@@ -9,20 +9,20 @@
 		<td><%= @qbank.question %></td>
 	</tr>
 	<tr>
-		<td>Option1: </td>
-		<td><%= @qbank.option1 %></td>
+		<td>optionA: </td>
+		<td><%= @qbank.optionA %></td>
 	</tr>
 	<tr>
-		<td>Option2: </td>
-		<td><%= @qbank.option2 %></td>
+		<td>optionB: </td>
+		<td><%= @qbank.optionB %></td>
 	</tr>
 	<tr>
-		<td>Option3: </td>
-		<td><%= @qbank.option3 %></td>
+		<td>optionC: </td>
+		<td><%= @qbank.optionC %></td>
 	</tr>
 	<tr>
-		<td>Option4: </td>
-		<td><%= @qbank.option4 %></td>
+		<td>optionD: </td>
+		<td><%= @qbank.optionD %></td>
 	</tr>
 	<tr>
 		<td>Option Match: </td>
@@ -38,7 +38,12 @@
 	</tr>
 	<tr>
 		<td>mp3: </td>
-		<td><%= @qbank.mp3 %></td>
+		<td>
+			<audio controls>
+				<source src="<%= url_for(@qbank.mp3) if @qbank.mp3.attached? %>" type="audio/mpeg">
+					Your browser does not support the audio element.
+			</audio>
+		</td>
 	</tr>
 	<tr>
 		<td>Nguoi dang: </td>

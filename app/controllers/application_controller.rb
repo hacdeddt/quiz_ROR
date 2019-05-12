@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, 
     	keys: [:fullName, :address, :year_birthday, :gender])
   end
+
+  # rescue_from ActiveModel::UnknownAttributeError do 
+  #     redirect_to root_url, alert: 'Các trường không phù hợp, vui lòng xem lại!'
+  #   end
 end

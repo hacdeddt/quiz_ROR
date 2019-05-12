@@ -9,20 +9,28 @@
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
+  <script>
+      $(window).on('beforeunload', function(){
+        $('body').addClass("loading");
+      });
+  </script>
 </head>
 
 <body>
   <% if !user_signed_in? %>
-  <div class="logo-login">
-    <%= link_to root_path do %>
-    <%= image_tag("logo.png", width: "160px", height: "60px") %>
-    <% end %>
-  </div>
+    <div class="logo-login">
+      <%= link_to root_path do %>
+      <%= image_tag("logo.png", width: "160px", height: "60px") %>
+      <% end %>
+    </div>
   <% else %>
-  <%= render partial: "layouts/navbar" %>
+    <%= render partial: "layouts/navbar" %>
   <div class="margin-top-content">
   </div>
   <%end %>
+  <div class="loading-bar"></div>
   <%= custom_bootstrap_flash %> 
   <div class="container">   
     <%= yield %>

@@ -17,6 +17,8 @@
 //= require ckeditor/init
 //= require_tree .
 //= require bootstrap
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 $(document).ready(function() {	
 	toastr.options = {
 		"closeButton": false,

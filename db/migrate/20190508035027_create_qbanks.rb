@@ -2,10 +2,10 @@ class CreateQbanks < ActiveRecord::Migration[5.2]
   def change
     create_table :qbanks do |t|
       t.text :question, null: false
-      t.text :option1, null: false
-      t.text :option2, null: false
-      t.text :option3, null: false
-      t.text :option4, null: false
+      t.text :optionA, null: false
+      t.text :optionB, null: false
+      t.text :optionC, null: false
+      t.text :optionD, null: false
       t.string :option_match, null: false
       t.text :answer
       t.string :image

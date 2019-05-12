@@ -77,4 +77,16 @@ Rails.application.configure do
     ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
       html_tag.html_safe
     end
+
+
+    # bullet to check N+1 query
+    config.after_initialize do
+      Bullet.enable = true
+      Bullet.alert = true
+      Bullet.bullet_logger = true
+      Bullet.console = true
+      Bullet.rails_logger = true
+      Bullet.add_footer = true
+      Bullet.raise = true
+    end
 end

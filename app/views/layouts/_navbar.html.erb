@@ -12,9 +12,9 @@
         <span class="icon-bar"></span>
       </button>
     </div>
-    <form class="navbar-form navbar-left">
+    <form class="navbar-form navbar-left" method="get">
       <div class="form-group">
-        <input type="text" class="form-control input-search" placeholder="Search">
+        <input type="text" class="form-control input-search" name="name" placeholder="Search" value="<%= params[:name] if params[:name].present? %>">
       </div>
       <button type="submit" class="btn btn-default button-search">Tìm kiếm</button>
     </form>
@@ -24,17 +24,17 @@
         <li class="user-page <%= (original_url == user_path(current_user.id)) ? 'active' : ''%>">
           <%= link_to user_path(current_user.id), class: "link-in-navbar" do %>
           <% if current_user.image.file.nil? %>
-          <%= image_tag("avatar.png") %>
+            <%= image_tag("avatar.png") %>
           <% else %>
-          <%= image_tag(current_user.image.url) %>
+            <%= image_tag(current_user.image.url) %>
           <% end %>
-          <%= current_user.fullName %>  
+            <%= current_user.fullName %>  
           <% end %>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cài đặt<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            
+
             <% if !current_user.encrypted_password.blank? %>
             <li class="<%= (original_url == edit_user_registration_path) ? 'active' : ''%>"><%= link_to "Đổi Mật Khẩu", edit_user_registration_path %></li>
             <%end%>

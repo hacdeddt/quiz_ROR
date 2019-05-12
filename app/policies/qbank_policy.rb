@@ -17,4 +17,8 @@ class QbankPolicy < ApplicationPolicy
   def delete?
   	return true if (user.role || @current_user.id == user.id)
   end
+
+  def show?
+  	return true if (user.role || @current_user.id == user.id)
+  end
 end

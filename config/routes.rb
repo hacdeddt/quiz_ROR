@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :users, only: [:update, :edit, :show] do
-  	resources :qbanks
+  	resources :qbanks do
+  		collection { post :import }
+  	end
   end
 
   resources :subjects
