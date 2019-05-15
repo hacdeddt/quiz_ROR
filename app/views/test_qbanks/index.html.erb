@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="container-form" >
+      <h1 style="text-align: center;">Ngân hàng câu hỏi</h1>
+      <%= link_to 'Xong', user_test_path(current_user, params[:test_id]), class: "btn btn-primary" %>
+      <br><br>
+      <%= form_tag user_test_test_qbanks_path(current_user.id, params[:test_id]), method: :get, class: "form-inline" do %>
+        <div class="form-group">
+          <p>
+            <%= select_tag :category_id, options_for_select(@categories.collect { |c| [c.name, c.id]}, params[:category_id]), include_blank: "Tất cả các lớp", :class => 'form-control' %>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <p>
+            <%= select_tag :subject_id, options_for_select(@subjects.collect { |s| [s.name, s.id]}, params[:subject_id]), include_blank: "Tất cả các môn học", :class => 'form-control' %> 
+          </p>
+        </div>
+
+        <div class="form-group">
+          <p>
+            <label>
+                       <input type="checkbox" value="1" <%= "checked" if !params[:of_me].nil? %> name="of_me" id="of_me"> Câu hỏi của tôi
+                    </label>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <p>
+            <%= submit_tag "Lọc", class: "btn btn-success" %> 
+          </p>
+        </div>
+        
+      <% end %>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="col-md-4">Câu hỏi</th>
+            <th class="col-md-1">Lớp</th>
+            <th class="col-md-1">Môn</th>
+            <th class="col-md-2">Người đăng</th>
+            <th class="col-md-1">Có trong số đề thi</th>
+            <th class="col-md-2">Action</th>
+          </tr>
+        </thead>
+        <% if @qbanks.blank? %>
+          <tbody><tr><td colspan="6">Không có câu hỏi</td></tr></tbody>
+        <% else %>
+          <tbody id="test_qbanks">
+             <%= render partial: "qbank", collection: @qbanks %>
+          </tbody>
+        <%end %>
+      </table>
+      <div id="infinite-scrolling">
+        <p><%= will_paginate @qbanks %></p>
+      </div>
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+

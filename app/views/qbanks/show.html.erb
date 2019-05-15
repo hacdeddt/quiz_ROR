@@ -1,62 +1,68 @@
-<h1>Chi tiết câu hỏi</h1>
-<table class="table">
-	<tr>
-		<td>ID: </td>
-		<td><%= @qbank.id %></td>
-	</tr>
-	<tr>
-		<td>Question: </td>
-		<td><%= @qbank.question %></td>
-	</tr>
-	<tr>
-		<td>optionA: </td>
-		<td><%= @qbank.optionA %></td>
-	</tr>
-	<tr>
-		<td>optionB: </td>
-		<td><%= @qbank.optionB %></td>
-	</tr>
-	<tr>
-		<td>optionC: </td>
-		<td><%= @qbank.optionC %></td>
-	</tr>
-	<tr>
-		<td>optionD: </td>
-		<td><%= @qbank.optionD %></td>
-	</tr>
-	<tr>
-		<td>Option Match: </td>
-		<td><%= @qbank.option_match %></td>
-	</tr>
-	<tr>
-		<td>Answer: </td>
-		<td><%= @qbank.answer %></td>
-	</tr>
-	<tr>
-		<td>image: </td>
-		<td><%= @qbank.image %></td>
-	</tr>
-	<tr>
-		<td>mp3: </td>
-		<td>
-			<audio controls>
-				<source src="<%= url_for(@qbank.mp3) if @qbank.mp3.attached? %>" type="audio/mpeg">
-					Your browser does not support the audio element.
-			</audio>
-		</td>
-	</tr>
-	<tr>
-		<td>Nguoi dang: </td>
-		<td><%= @qbank.user.fullName %></td>
-	</tr>
-	<tr>
-		<td>lop: </td>
-		<td><%= @qbank.category.name %></td>
-	</tr>
-	<tr>
-		<td>mon hoc: </td>
-		<td><%= @qbank.subject.name %></td>
-	</tr>
+<div class="container-form">
+	<h1 style="text-align: center;">Chi tiết câu hỏi</h1>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2 background-quiz">
+			<div style="margin: 0px 30px;">
+			<span class="bold">ID</span> <%= @qbank.id %>: 
 
-</table>
+			<% if @qbank.mp3.attached?  %>
+					<audio controls>
+						<source src="<%= url_for(@qbank.mp3) %>" type="audio/mpeg">
+							Your browser does not support the audio element.
+					</audio>
+			<% end %>
+
+			<%= raw @qbank.question %>
+			<p>
+				<span <%="class=answer-correct" if @qbank.option_match == "A" %> >
+					A. <%= raw @qbank.optionA %>
+				</span>
+			</p>
+			<p >
+				<span <%="class=answer-correct" if @qbank.option_match == "B" %> >
+					B. <%= raw @qbank.optionB %>
+				</span>
+			</p>
+			<p><span <%="class=answer-correct" if @qbank.option_match == "C" %> >
+				C. <%= raw @qbank.optionC %>
+				</span>
+			</p>
+			<p>
+				<span <%="class=answer-correct" if @qbank.option_match == "D" %> >
+					D. <%= raw @qbank.optionD %>
+				</span>
+			</p>
+			<br>
+			<div>
+				<span class="bold">Đáp án chi tiết: </span>
+					<%= raw @qbank.answer %>.
+			</div>
+			<br>
+			<table class="table">
+				<thead>
+					<th>Người đăng</th>
+					<th>Lớp</th>
+					<th>Môn học</th>
+					<th>Trạng thái</th>
+					<th>Ẩn tùy chọn</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<%= link_to user_path(@qbank.user.id) do %>
+								<%= @qbank.user.fullName %>
+							<% end %>
+						</td>
+						<td><%= @qbank.category.name %></td>
+						<td><%= @qbank.subject.name %></td>
+						<td><%= accepted(@qbank.accept) %></td>
+						<td><%= hidden(@qbank.hide_option) %></td>
+					</tr>
+				</tbody>
+			</table>
+			<%= link_to "Trở lại", user_qbanks_path(current_user), class: "btn btn-default" %> 
+			<%= link_to "Chỉnh sửa",  edit_user_qbank_path(current_user, @qbank), class: "btn btn-primary" %>
+		</div>
+	</div>
+</div>
 

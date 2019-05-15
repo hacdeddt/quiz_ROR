@@ -1,45 +1,69 @@
-<%= provide(:title, current_user.fullName)%>
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-md-4">
-			<div class="table-personal-information">
+<body class="hold-transition skin-blue sidebar-mini margin-top-left-admin">
+  <div class="wrapper">
 
-            	<% if current_user.image.file.nil? %>
-	              <%= image_tag("avatar.png", width: "100px", height: "100px") %>
-	            <% else %>
-	              <% begin %>
-	              	<%= image_tag(current_user.image_identifier, width: "100px", height: "100px") %>
-	              <% rescue %>
-	                <%= image_tag(current_user.image.url, width: "100px", height: "100px") %>
-	              <% end %>
-	            <% end %>
+    <!-- Main Header -->
+    <%= render "layouts/navbar" %>
+    <!-- Left side column. contains the logo and sidebar -->
+    <%= render "administration/left" %>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
 
-				<h4>Thông tin cá nhân:</h4>
-				<%= link_to "Chỉnh sửa", edit_user_path(current_user.id) %>
-				<table class="table">
-					<tr>
-						<th>Họ tên: </th>
-						<td colspan="2"><%= current_user.fullName %></td>
-					</tr>
-					<tr>
-						<th>Giới tính: </th>
-						<td colspan="2"><%= gender_user(current_user.gender) %></td>
-					</tr>
-					<tr>
-						<th>Ngày sinh: </th>
-						<td colspan="2"><%= current_user.year_birthday.strftime('%d/%m/%Y') if !current_user.year_birthday.nil? %></td>
-					</tr>
-					<tr>
-						<th>Địa chỉ: </th>
-						<td colspan="2"><%= current_user.address %></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-8">
-			<div class="table-personal-information table-post-user">
-				<h2>Bai trac nghiem user da lam</h2>
-			</div>
-		</div>
-	</div>
-</div>
+      </section>
+
+      <!-- Main content -->
+
+      <section class="content container-fluid">
+
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+        <div class="container-form">
+          <%= form_tag users_path, method: :get, class: "form-inline" do %>
+            <div class="form-group">
+              <label>Người dùng mới tham gia</label>
+                <%= select_tag :days, options_for_select([["Hôm nay", "1"],["7 ngày trước", "7"]], params[:days]), include_blank: "Tất cả người dùng", :class => 'form-control' %>
+            </div>
+
+           <div class="form-group">
+              <%= submit_tag "Lọc", class: "btn btn-success" %> 
+          </div>
+        
+        <% end %>
+        <br>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th> Họ Tên </th>
+                <th> Giới tính </th>
+                <th> Ngày sinh </th>
+                <th> Địa chỉ</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody id="users">
+              <%= render @users %>
+            </tbody>
+          </table>
+          <%= will_paginate @users %>
+        </div>
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+
+    <!-- Control Sidebar -->
+    <%= render "administration/controlRight" %>
+    <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+    immediately after the control sidebar -->
+
+  </div>
+  <!-- ./wrapper -->
+
+</body>

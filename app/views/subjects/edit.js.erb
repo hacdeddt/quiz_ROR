@@ -1,0 +1,3 @@
+$('#link_edit_<%= @subject.id %>').remove();
+$('.edit_subject_<%= @subject.id %>').show();
+$('#edit_subject_<%= @subject.id %>').append('<%= j render "form", subject: @subject %>');

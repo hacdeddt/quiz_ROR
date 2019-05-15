@@ -1,27 +1,44 @@
-<p id="notice"><%= notice %></p>
+<body class="hold-transition skin-blue sidebar-mini margin-top-left-admin">
+  <div class="wrapper">
 
-<h1>Categories</h1>
+    <!-- Main Header -->
+    <!-- Left side column. contains the logo and sidebar -->
+    <%= render "administration/left" %>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      </section>
 
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <!-- Main content -->
 
-<br>
+      <section class="content container-fluid">
 
-<%= link_to 'New Category', new_category_path %>
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+
+        <div class="container-form">
+          <h3 style="text-align: center;">Lớp</h3>
+          <%= link_to 'Thêm lớp ', new_category_path, id: "new-category", remote: true, class: "btn btn-primary" %>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="categories">
+              <%= render @categories %>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+      <!-- /.content -->
+    </div>
+  </div>
+</body>

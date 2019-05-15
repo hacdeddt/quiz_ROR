@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Qbank:</strong>
+  <%= @test_qbank.qbank_id %>
+</p>
+
+<p>
+  <strong>Test:</strong>
+  <%= @test_qbank.test_id %>
+</p>
+
+<%= link_to 'Edit', edit_test_qbank_path(@test_qbank) %> |
+<%= link_to 'Back', test_qbanks_path %>

@@ -1,10 +1,19 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_user, only: [:edit, :update, :show]
+	before_action :set_user, only: [:edit, :update, :show, :destroy]
+
+	def index
+		num_day = params[:days]
+		if num_day.blank?
+			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at").where("id != ?",current_user.id).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+		else
+			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at").where("id != ? and created_at >= ?",current_user.id, num_day.to_i.days.ago).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+		end	
+		authorize @users
+	end
 
 	def edit
 		authorize @user
-		authorize current_user
 	end
 
 	def show
@@ -13,7 +22,6 @@ class UsersController < ApplicationController
 
 	def update
 		authorize @user
-		authorize current_user
 		respond_to do |format|
 			if @user.update(user_params)
 				format.html { redirect_to user_path, notice: 'Thông tin cá nhân của bạn đã được cập nhật thành công!' }
@@ -22,6 +30,14 @@ class UsersController < ApplicationController
 				format.html { render :edit }
 				format.json { render json: @user.errors, status: :unprocessable_entity }
 			end
+		end
+	end
+
+	def destroy
+		authorize @user
+		@user.destroy
+		respond_to do |format|
+			format.js { flash.now[:notice] = "Xóa người dùng thành công"}
 		end
 	end
 

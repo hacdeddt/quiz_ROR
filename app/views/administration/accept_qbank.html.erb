@@ -1,0 +1,60 @@
+
+<body class="hold-transition skin-blue sidebar-mini margin-top-left-admin">
+	<div class="wrapper">
+		<%= render "administration/left" %>
+		<div class="content-wrapper">
+			<section class="content container-fluid">
+				<div class="container-form">
+					<h4 style="text-align: center;">Xét duyệt câu hỏi</h4>
+					<table class="table table-bordered" style="width:100%">
+						<thead>
+							<tr>
+								<th >Câu hỏi</th>
+								<th>Đáp án</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @qbanks.each do |q| %>
+
+							<tr id="qbank_<%= q.id %>">
+								<td class="td_qbank"><%= q.id %>. 
+									<% if q.mp3.attached?  %>
+									  <audio controls>
+										<source src="<%= url_for(q.mp3) %>" type="audio/mpeg">
+											Your browser does not support the audio element.
+									  </audio>
+									<% end %>
+										<%= raw q.question %>
+										<div>
+											A. <%= raw q.optionA %>&nbsp;&nbsp;/
+											B. <%= raw q.optionB %>
+											<br>
+											C. <%= raw q.optionC %>&nbsp;&nbsp;/
+											D. <%= raw q.optionD %>
+										</div>
+
+									</td>
+									<td>Đáp án: <%= raw q.answer %></td>
+									<td >
+										<a rel="nofollow" id="" data-remote="true" data-method="put" href="/qbanks/accepted/<%= q.id %>"><i class="fa fa-check-circle" aria-hidden="true"></i></a>&nbsp;&nbsp;|
+										<%= link_to user_qbank_path(current_user, q), method: :delete, remote: true do %>
+										<i class="fa fa-times" aria-hidden="true"></i>
+										<%end %>
+										<br>
+										<%= link_to edit_user_qbank_path(current_user, q) do %>
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+										<% end %>
+									</td>
+								</tr>
+								<% end %>
+							</tbody>
+						</table>
+						<div id="infinite-scrolling">
+							<%= will_paginate @qbanks %>
+						</div>
+						<br>
+					</div>
+				</section>
+			</div>
+		</body>

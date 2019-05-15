@@ -1,0 +1,6 @@
+$('#qbank_<%= @qbank.id %>').remove();
+$('#flash').html('<%= j custom_bootstrap_flash %>');
+$('#number_notification').hide();
+$('#number_notification').html('<%= @qbanks %>').show();
+$('#number_notification_2').hide();
+$('#number_notification_2').html('<%= @qbanks %>').show();

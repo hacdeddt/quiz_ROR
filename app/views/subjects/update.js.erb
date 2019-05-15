@@ -1,0 +1,5 @@
+$('#new_task').remove();
+$('#subject_<%= @subject.id %>').remove();
+$('.edit_subject_<%= @subject.id %>').remove();
+$('#subjects').append('<%= j render @subject %>');
+$('#flash').html('<%= j custom_bootstrap_flash %>');

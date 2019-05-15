@@ -1,0 +1,7 @@
+$('#test_qbanks').append('<%= j render partial: "qbank", collection: @qbanks %>');
+<% if @qbanks.next_page %>
+	$('.pagination').replaceWith('<%= j will_paginate @qbanks %>');
+<% else %>
+	$('.pagination').remove();
+<% end %>
+<% sleep 0.1 %>

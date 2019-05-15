@@ -12,13 +12,14 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require adminlte.js
 //= require toastr
-//= require activestorage
-//= require ckeditor/init
-//= require_tree .
 //= require bootstrap
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require activestorage
+//= require ckeditor/init
+//= require_tree .
 $(document).ready(function() {	
 	toastr.options = {
 		"closeButton": false,

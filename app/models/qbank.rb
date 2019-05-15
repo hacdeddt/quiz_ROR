@@ -5,6 +5,9 @@ class Qbank < ApplicationRecord
 	belongs_to :user
 	belongs_to :subject
 	has_one_attached :mp3
+	has_one :mp3_blob, through: :mp3_attachment, class_name: "ActiveStorage::Blob", source: :blob
+	has_many :test_qbanks, dependent: :destroy
+	has_many :tests, through: :test_qbanks
 
 	before_validation :convert_md5
 
@@ -46,12 +49,28 @@ class Qbank < ApplicationRecord
 	 validate :check_url
 
     def check_url
-      if question.match(/((https|http|)?:\/\/(?:w{1,3}.)?[^\s]*?(?:\.[a-z]+)+)/)
+    	regex_url = /<a.*href=("|').*('|").*>/
+      if question.match(regex_url)
         errors.add :question, "không được chứa url."
+      end
+      if optionA.match(regex_url)
+        errors.add :optionA, "không được chứa url."
+      end
+      if optionB.match(regex_url)
+        errors.add :optionB, "không được chứa url."
+      end
+      if optionC.match(regex_url)
+        errors.add :optionC, "không được chứa url."
+      end
+      if optionD.match(regex_url)
+        errors.add :optionD, "không được chứa url."
+      end
+      if answer.match(regex_url)
+        errors.add :answer, "không được chứa url."
       end
     end
 
-    def self.import(file, category_id, subject_id, of_me)
+    def self.import(file, category_id, subject_id, user_id)
     	d = 1
     	spreadsheet = open_spreadsheet(file)
     	if !spreadsheet #Nếu không phải các file excel thì không cho tải lên
@@ -71,7 +90,7 @@ class Qbank < ApplicationRecord
 				    		qbank.attributes = row.to_hash.slice(*row.to_hash.keys)
 				    		qbank.category_id = category_id
 				    		qbank.subject_id = subject_id
-				    		qbank.of_me = of_me
+				    		qbank.user_id = user_id
 				    		if qbank.valid?
 				    			qbank.save!
 				    		else

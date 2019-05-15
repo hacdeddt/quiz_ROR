@@ -1,0 +1,27 @@
+<tr>
+	<td ><%= raw qbank.question %></td>
+	<td ><%= qbank.category.name %></td>
+	<td ><%= qbank.subject.name %></td>
+	<td >
+		<%= link_to user_path(qbank.user.id) do %>
+			<%= qbank.user.fullName %>
+		<% end %>
+	</td>
+	<td><%= qbank.tests.size %></td>
+	<td>
+		
+			<div id ="destroy_<%= qbank.id %>">
+				<% if !TestQbank.find_by(qbank_id: qbank.id, test_id: params[:test_id]).nil? %>
+					<% tq_id = TestQbank.find_by(qbank_id: qbank.id, test_id: params[:test_id]).id %>
+					<%= link_to "Xóa", user_test_test_qbank_path(current_user, params[:test_id], tq_id), method: :delete, remote: true, class: "btn btn-danger" %>
+				<% end %>
+			</div>
+			<div id="add_<%= qbank.id %>">
+				<% if TestQbank.find_by(qbank_id: qbank.id, test_id: params[:test_id]).nil? %>
+					<%= button_to 'Thêm', user_test_test_qbanks_path(current_user, params[:test_id]), params: {'test_id' => params[:test_id], 'qbank_id' => qbank.id}, remote: true, class: "btn btn-success" %>
+				<% end %>
+
+			</div>
+		
+	</td>
+</tr>

@@ -35,10 +35,17 @@ en:
     attributes:
       user:
         email: "Địa chỉ Email"
+        password_confirmation: "Xác nhận mật khẩu"
+        current_password: "Mật khẩu hiện tại"
       qbank:
         category: "Lớp"
         subject: "Môn học"
     errors:
+      messages:
+        invalid: "không hợp lệ"
+        confirmation: "không giống với %{attribute}"
+        too_short: 
+          other: "quá ngắn (tối thiểu là %{count} kí tự)"
       template:
         header:
           one:   "1 lỗi đã xảy ra"
@@ -57,4 +64,5 @@ en:
               blank: "không được để trống"
             password:
               blank: "không được để trống"
+
 

@@ -1,0 +1,3 @@
+$('#link_edit_<%= @category.id %>').remove();
+$('.edit_category_<%= @category.id %>').show();
+$('#edit_category_<%= @category.id %>').append('<%= j render "form", category: @category %>');

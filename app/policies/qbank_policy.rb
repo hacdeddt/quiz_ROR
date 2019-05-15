@@ -1,24 +1,24 @@
 class QbankPolicy < ApplicationPolicy
-  attr_reader :user, :current_user 
+  attr_reader :current_user, :qbank 
 
-  def initialize(user, current_user)
-    @user = user
+  def initialize(current_user, qbank)
     @current_user = current_user
+    @qbank = qbank
   end
 
   def edit?
-  	return true if (user.role || @current_user.id == user.id) 
+  	return true if (@current_user.role || @current_user.id == @qbank.user.id)
   end
 
   def update?
-  	return true if (user.role || @current_user.id == user.id)
+  	return true if (@current_user.role || @current_user.id == @qbank.user.id)
   end
 
   def delete?
-  	return true if (user.role || @current_user.id == user.id)
+  	return true if (@current_user.role || @current_user.id == @qbank.user.id)
   end
 
   def show?
-  	return true if (user.role || @current_user.id == user.id)
+  	return true if (@current_user.role || @current_user.id == @qbank.user.id)
   end
 end

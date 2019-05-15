@@ -1,0 +1,4 @@
+$('#form-category').remove();
+$('#new-category').show();
+$('#categories').append('<%= j render @category %>');
+$('#flash').html('<%= j custom_bootstrap_flash %>');

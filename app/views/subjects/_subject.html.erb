@@ -1,0 +1,14 @@
+<tr id="subject_<%= subject.id %>">
+	<td><%= subject.name %></td>
+	<td><%= link_to edit_subject_path(subject), remote: true, id: "link_edit_"+subject.id.to_s do %>
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		<% end %>
+	</td>
+	<td><%= link_to subject, method: :delete, data: { confirm: 'Are you sure?' }, remote: true do %>
+			<i class="fa fa-trash" aria-hidden="true"></i>
+		<%end %>
+	</td>
+</tr>
+<tr class="edit_subject_<%= subject.id %>" style="display: none;">
+	<td colspan="3" id="edit_subject_<%= subject.id %>"></td>
+</tr>

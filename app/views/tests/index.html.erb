@@ -1,0 +1,33 @@
+<body class="hold-transition skin-blue sidebar-mini margin-top-left-admin">
+	<div class="wrapper">
+		<%= render "administration/left" %>
+		<div class="content-wrapper">
+			<section class="content container-fluid">
+				<div class="container-form">
+					<h3 style="text-align: center;">Đề thi</h3>
+					<%= link_to 'Thêm đề thi', new_user_test_path(current_user), id: "new-category", class: "btn btn-primary" %>
+					<br>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Tên</th>
+								<th>Mô tả</th>
+								<th>Điểm tuyệt đối</th>
+								<th>Thời gian (phút)</th>
+								<th>Lượt thi</th>
+								<th colspan="2">Action</th>
+							</tr>
+						</thead>
+
+						<tbody id="tests">
+							<%= render @tests %>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+  $('#container_application').removeClass('container');
+</script>

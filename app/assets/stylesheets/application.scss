@@ -12,6 +12,11 @@
  *
  *= require_tree .
  *= require toastr
+ *= require bootstrap
+ *= require AdminLTE
+ *= require skin-blue
+ *= require blue
+ *= require ionicons
  *= require_self
  */
 @import "bootstrap-sprockets";
@@ -21,13 +26,17 @@
 @import "font-awesome";
 
 html,body{
-	background-image: url('background1.png');
+	background: #ecf0f5;
 	background-size: cover;
 	background-repeat: repeat;
 	height: 100%;
 	font-family: sans-serif;
 	font-size: 15px;
 }
+
+.navbar-inverse {
+    background-color: #3c8dbc !important;
+  }
 
 .cover-form-login
 {
@@ -96,7 +105,18 @@ html,body{
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus
 {
 	height: 56px;
+	background-color: #106494 !important;
 }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus
+{
+	background-color: #106494 !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+	color: #fdfcfc !important;
+}
+
 
 .link-in-navbar {
     margin-top: 13px;
@@ -123,11 +143,15 @@ html,body{
 }
 
 .container-form {
-	background: #f5f6f7;
+	background: #ffffff;
 	padding: 2em;
 	border: 1px solid #f3f5e8;
 	border-radius: 5px;
 	margin-bottom: 20px;
+}
+
+.margin-top-left-admin {
+	margin-top:-23px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -159,12 +183,16 @@ html,body{
 		border: 0px !important;
 	}
 
+	.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+		color: #fdfcfc !important;
+	}
+
 	.table-post-user {
 		margin-top:20px;
 	}
 
 	.nav-toggle-in-mobile {
-		background: #000000;
+		background: #3c8dbc;
     	margin-top: 30px;
 	}
 

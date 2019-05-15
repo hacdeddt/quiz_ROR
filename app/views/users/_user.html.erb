@@ -1,0 +1,23 @@
+<tr id="user_<%= user.id %>">
+	<td>
+		<%= link_to user do %>
+			<% if user.image.file.nil? %>
+				<%= image_tag("avatar.png", width: "100px", height: "100px") %>
+			<% else %>
+				<%= image_tag(user.image.url, width: "100px", height: "100px") %>
+			<% end %>
+			<%= user.fullName %>
+		<% end %>
+	</td>
+	<td><%= gender_user(user.gender) %></td>
+	<td><%= user.year_birthday.strftime('%d/%m/%Y') if !user.year_birthday.nil? %></td>
+	<td><%= user.address %></td>
+	<td>
+	    <%= link_to edit_user_path(user) do %>
+	    	<i class="fa fa-pencil" aria-hidden="true"></i>
+	    <% end %>
+	    <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, remote: true do %>
+	    	<i class="fa fa-trash" aria-hidden="true"></i>
+	    <% end %>
+	</td>
+</tr>

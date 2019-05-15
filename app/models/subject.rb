@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
   has_many :qbanks
+  has_many :tests
   
 	before_validation :transfer_name
 

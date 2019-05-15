@@ -1,11 +1,14 @@
 <div class="row">
 	<div class="col-xs-12 col-md-12">
 		<div class="container-form">
-			<h4>Nhập bằng file excel</h4>
+			<div style="margin-bottom: 5px;">
+				<span style="font-size: 20px;">Nhập bằng file excel</span>
+				<%= link_to "Tải File excel Mẫu", qbanks_download_file_excel_sample_path, class: "btn btn-info" %>
+			</div>
 			<%= form_tag import_user_qbanks_path(current_user.id), multipart: true, class: "form-inline import_qbank" do %>
 
 				<div class="form-group inline">
-					<p><%= file_field_tag :file, class: "form-control-file" %></p>
+					<p><%= file_field_tag :file, class: "form-control-file", style: "width: 230px;" %></p>
 				</div>
 				<div class="form-group">
 					<p>
@@ -18,8 +21,15 @@
 					<p>
 						<label> Chọn môn:</label>
 						<%= select_tag :subject_id, options_for_select(@subjects.collect { |s| [s.name, s.id]}), include_blank: "Chọn môn học", :class => 'form-control' %> 
-						<%= submit_tag "Import", class: "btn btn-success" %>
+
 					</p>
+				</div>
+				<div class="form-group">
+					<%= recaptcha_tags %>
+						
+				</div>
+				<div class="form-group">
+					<%= submit_tag "Import", class: "btn btn-success" %>
 				</div>
 			<% end %>
 		</div>
@@ -63,16 +73,17 @@
 			<table class="table table-bordered">
 			  <thead>
 			    <tr>
-			      <th>Câu hỏi</th>
-			      <th>Lớp</th>
-			      <th>Môn</th>
-			      <th>Người đăng</th>
-			      <th>Có trong số đề thi</th>
-			      <th colspan="4">Action</th>
+			      <th class="col-md-4">Câu hỏi</th>
+			      <th class="col-md-1">Lớp</th>
+			      <th class="col-md-1">Môn</th>
+			      <th class="col-md-2">Người đăng</th>
+			      <th class="col-md-1">Có trong số đề thi</th>
+			      <th class="col-md-2">Trạng thái</th>
+			      <th colspan="2" class="col-md-2">Action</th>
 			    </tr>
 			  </thead>
 			  <% if @qbanks.blank? %>
-			  	<tbody><tr><td colspan="6">Không có câu hỏi</td></tr></tbody>
+			  	<tbody><tr><td colspan="7">Không có câu hỏi</td></tr></tbody>
 			  <% else %>
 				  <tbody id="qbanks">
 					<%= render @qbanks %>

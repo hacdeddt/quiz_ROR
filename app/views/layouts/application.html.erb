@@ -27,12 +27,17 @@
     </div>
   <% else %>
     <%= render partial: "layouts/navbar" %>
-  <div class="margin-top-content">
-  </div>
+    <div class="margin-top-content">
+    </div>
   <%end %>
+
   <div class="loading-bar"></div>
-  <%= custom_bootstrap_flash %> 
-  <div class="container">   
+  
+  <div id="flash">
+    <%= custom_bootstrap_flash %> 
+  </div>
+  
+  <div id="container_application" <%= "class=container" if !(original_url.include?("administration")) %> >   
     <%= yield %>
   </div>
 </div>

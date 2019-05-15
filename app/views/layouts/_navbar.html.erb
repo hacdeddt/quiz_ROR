@@ -21,13 +21,37 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right nav-toggle-in-mobile">
+        <% if current_user.role %>
+          <%
+            @qbanks_accepts = Qbank.where("accept = 0 and is_delete = 0")
+          %>
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning" id="number_notification"><%= @qbanks_accepts.size %></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li>
+                    <%= link_to administration_accept_qbank_path do %>
+                      <i class="fa fa-warning text-yellow"></i> <span id="number_notification_2"><%= @qbanks_accepts.size %></span> câu hỏi cần được xét duyệt
+                    <% end %>
+                  </li>
+                </ul>
+              </li>
+              <!-- <li class="footer"><a href="#">View all</a></li> -->
+            </ul>
+          </li>
+        <% end %>
         <li class="user-page <%= (original_url == user_path(current_user.id)) ? 'active' : ''%>">
           <%= link_to user_path(current_user.id), class: "link-in-navbar" do %>
-          <% if current_user.image.file.nil? %>
-            <%= image_tag("avatar.png") %>
-          <% else %>
-            <%= image_tag(current_user.image.url) %>
-          <% end %>
+            <% if current_user.image.file.nil? %>
+              <%= image_tag("avatar.png") %>
+            <% else %>
+              <%= image_tag(current_user.image.url) %>
+            <% end %>
             <%= current_user.fullName %>  
           <% end %>
         </li>
@@ -35,20 +59,18 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cài đặt<span class="caret"></span></a>
           <ul class="dropdown-menu">
 
-            <% if !current_user.encrypted_password.blank? %>
-            <li class="<%= (original_url == edit_user_registration_path) ? 'active' : ''%>"><%= link_to "Đổi Mật Khẩu", edit_user_registration_path %></li>
+            <% if current_user.role %>          
+              <li class="<%= (original_url == administration_index_path) ? 'active' : ''%>"><%= link_to "Trang Admin", administration_index_path %></li>
             <%end%>
 
-            <% if current_user.role %>          
-            <li class="<%= (original_url == categories_path) ? 'active' : ''%>"><%= link_to "Lớp", categories_path %></li>
-            <li class="<%= (original_url == subjects_path) ? 'active' : ''%>"><%= link_to "Môn học", subjects_path %></li>
-            <%end%>
             <li class="<%= (original_url == new_user_qbank_path(current_user.id)) ? 'active' : ''%>"><%= link_to "Câu hỏi", user_qbanks_path(current_user.id) %></li>
 
-            <li><%= link_to "Đăng xuất", destroy_user_session_path, method: :delete %></li>
-            <li><a href="#">Something else here</a></li>
+            <li class="<%= (original_url == user_tests_path(current_user.id)) ? 'active' : ''%>"><%= link_to "Đề thi", user_tests_path(current_user) %></li>
+
+            <li class="<%= (original_url == edit_user_registration_path) ? 'active' : ''%>"><%= link_to "Đổi Mật Khẩu", edit_user_registration_path %></li>
+
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><%= link_to "Đăng xuất", destroy_user_session_path, method: :delete %></li>
           </ul>
         </li>
       </ul>

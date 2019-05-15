@@ -1,0 +1,5 @@
+$('#form-category').remove();
+$('#category_<%= @category.id %>').remove();
+$('.edit_category_<%= @category.id %>').remove();
+$('#categories').append('<%= j render @category %>');
+$('#flash').html('<%= j custom_bootstrap_flash %>');

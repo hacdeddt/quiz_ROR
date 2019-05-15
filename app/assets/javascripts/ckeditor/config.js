@@ -19,6 +19,8 @@ CKEDITOR.editorConfig = function( config ) {
   config.allowedContent = true;
   // tắt auto link textlink trong ckeditor, bây giờ copy paste link vào sẽ không tự động hiển thị dưới dạng link nữa
   config.forcePasteAsPlainText = true;
+  // tắt tự động cho vào thẻ p
+  config.autoParagraph = false;
   // Toolbar groups configuration.
   config.toolbar = [
    
@@ -27,20 +29,14 @@ CKEDITOR.editorConfig = function( config ) {
     // { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
     { name: 'links', items: ['Unlink'] },
     { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
     //'/',
-    { name: 'styles', items: ['Font', 'FontSize' ] },
+    // { name: 'styles', items: ['Font', 'FontSize' ] },
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] }
   ];
   config.toolbar_mini = [
-    { name: 'paragraph', 
-      groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], 
-      items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'styles', items: [ 'Font', 'FontSize' ] },
-    { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-    { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
+    { name: 'links', items: ['Unlink'] }
   ];
   // Toolbar đầy đủ, toolbar ở trên đã được lược bỏ ở 1 vài chỗ để cho gọn hơn
   // config.toolbar = [

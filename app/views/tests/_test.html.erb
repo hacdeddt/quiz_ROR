@@ -1,0 +1,18 @@
+<tr id="test_<%= test.id %>">
+	<td><%= test.name %></td>
+	<td><%= raw test.description %></td>
+	<td><%= test.full_score %></td>
+	<td><%= test.duration %></td>
+	<td><%= test.views %></td>
+	<td><%= link_to edit_user_test_path(current_user, test) do %>
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		<% end %>
+	</td>
+	<td><%= link_to user_test_path(current_user,test), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do %>
+			<i class="fa fa-trash" aria-hidden="true"></i>
+		<%end %>
+	</td>
+</tr>
+<tr class="edit_test_<%= test.id %>" style="display: none;">
+	<td colspan="3" id="edit_test_<%= test.id %>"></td>
+</tr>
