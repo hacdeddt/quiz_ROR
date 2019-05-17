@@ -1,9 +1,14 @@
+<style type="text/css">
+	img {
+		width: 300px;
+	}
+</style>
 <div class="row">
 	<div class="col-xs-12 col-md-12">
 		<div class="container-form">
 			<div style="margin-bottom: 5px;">
 				<span style="font-size: 20px;">Nhập bằng file excel</span>
-				<%= link_to "Tải File excel Mẫu", qbanks_download_file_excel_sample_path, class: "btn btn-info" %>
+				<%= link_to "Tải File excel Mẫu", qbanks_download_file_excel_sample_path, class: "btn btn-info", target: "_blank" %>
 			</div>
 			<%= form_tag import_user_qbanks_path(current_user.id), multipart: true, class: "form-inline import_qbank" do %>
 
@@ -69,7 +74,7 @@
 				</div>
 				
 			<% end %>
-
+			
 			<table class="table table-bordered">
 			  <thead>
 			    <tr>

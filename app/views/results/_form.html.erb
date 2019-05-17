@@ -1,0 +1,37 @@
+<%= form_with(model: result, local: true) do |form| %>
+  <% if result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(result.errors.count, "error") %> prohibited this result from being saved:</h2>
+
+      <ul>
+      <% result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :total_time %>
+    <%= form.number_field :total_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_score %>
+    <%= form.text_field :total_score %>
+  </div>
+
+  <div class="field">
+    <%= form.label :test_id %>
+    <%= form.number_field :test_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

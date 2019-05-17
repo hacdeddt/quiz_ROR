@@ -1,0 +1,26 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+
+.container-pdf {
+	font-size: 18px;
+	font-weight: 400;
+	color: black;
+	font-family: sans-serif;
+}
+
+.content-pdf {
+	margin:0px 30px;
+	margin-top: 70px;
+}
+
+.question-pdf {
+	margin-top: 17px;
+}
+
+.margin-left-option {
+	margin-left: 220px;
+}

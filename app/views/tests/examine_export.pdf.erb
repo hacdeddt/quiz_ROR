@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="pdf" class="container-pdf">
+        <div style="font-weight: 600; text-align: center;">
+          <table>
+            <tr>
+              <td style="text-align: left; width: 850px;">Trường: ...............................................</td>
+              <td style="width: 400px">Môn thi: <%= @test.subject.name %></td>
+            </tr>
+            <tr>
+              <td style="text-align: left">Họ tên: ..................................................</td>
+              <td>Thời gian làm bài: <%= @test.duration %> phút</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Lớp: .........................</td>
+              <td>Ngày ...., Tháng ...., Năm .......</td>
+            </tr>
+          </table>
+        </div>
+        <div class="content-pdf">
+          <h3 style="text-align: center;">Đề thi</h3>
+          <% @test.qbanks.each_with_index do |q, index| %>
+          <div class="question-pdf nobreak">
+            <span style="vertical-align: top">Câu hỏi <%= index + 1 %>: </span>
+            <% if q.question.include?('<img')%>
+              <%
+                img_tag = q.question[/<img.*\/>/] 
+                question = q.question
+                question[img_tag] = ''
+              %>
+              <%= raw question %>
+              <%= wicked_pdf_image_tag(img_tag[/src=("|')([^("|')]*)/,2]) %>
+            <% else %>
+              <%= raw q.question %>
+            <% end %>
+            <br>
+            <% if !q.hide_option %>
+              A. <%= raw q.optionA %>
+              <br>
+              B. <%= raw q.optionB %>
+              <br>
+              C. <%= raw q.optionC %>
+              <br>
+              D. <%= raw q.optionD %>
+            <% else %>
+              <br>
+              A.<span class="margin-left-option"> B.</span> <span class="margin-left-option"> C.</span> 
+              <span class="margin-left-option"> D. </span>
+            <% end %>
+          </div>
+          <% end %>
+          <div class="alwaysbreak"></div>
+            <h3 style="text-align: center;">Đáp án</h3>
+            <table class="table">
+                <tr>
+                  <% @test.qbanks.each_with_index do |q, index| %>
+                    <% if (index + 1) % 10 == 0 %>
+                      <tr></tr>
+                    <% end %>
+                    <td>
+                      <%= index + 1 %> (<span style="font-weight: bold;"><%= q.option_match %></span>)
+                    </td>
+                  <% end %>
+                </tr>
+            </table>
+            <h3 style="text-align: center;">Đáp án chi tiết</h3>
+            
+              <% @test.qbanks.each_with_index do |q, index| %>
+                <div class="question-pdf nobreak">
+                  <% if q.hide_option %>
+                    Câu hỏi <%= index + 1 %>:
+                      <br>
+                      A. <%= raw q.optionA %>
+                      <br>
+                      B. <%= raw q.optionB %>
+                      <br>
+                      C. <%= raw q.optionC %>
+                      <br>
+                      D. <%= raw q.optionD %>
+                  <% else %>
+                      <% if q.answer.present? %>
+                        <span style="font-weight: 600;">Câu hỏi <%= index + 1 %>:</span> <%= q.question %>
+                        <br>
+                        <span style="margin-left: 30px;">Đáp án: <%= raw q.answer %></span>
+                      <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

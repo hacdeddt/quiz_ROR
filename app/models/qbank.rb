@@ -8,6 +8,7 @@ class Qbank < ApplicationRecord
 	has_one :mp3_blob, through: :mp3_attachment, class_name: "ActiveStorage::Blob", source: :blob
 	has_many :test_qbanks, dependent: :destroy
 	has_many :tests, through: :test_qbanks
+	belongs_to :answer
 
 	before_validation :convert_md5
 

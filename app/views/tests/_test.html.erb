@@ -1,5 +1,9 @@
 <tr id="test_<%= test.id %>">
-	<td><%= test.name %></td>
+	<td>
+		<a href="tests/<%= test.id %>/details">
+			<%= test.name %>
+		</a>
+	</td>
 	<td><%= raw test.description %></td>
 	<td><%= test.full_score %></td>
 	<td><%= test.duration %></td>

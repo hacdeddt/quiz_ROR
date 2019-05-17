@@ -1,5 +1,12 @@
 <tr>
-	<td ><%= raw qbank.question %></td>
+	<td>
+		<% if qbank.question.include?('<img')%>
+			<% qbank.question[qbank.question[/style=".*"/]] = '' %>
+			<%= raw qbank.question %>
+		<% else %>
+			<%= raw qbank.question %>
+		<% end %>
+    </td>
 	<td ><%= qbank.category.name %></td>
 	<td ><%= qbank.subject.name %></td>
 	<td >
@@ -7,7 +14,7 @@
 			<%= qbank.user.fullName %>
 		<% end %>
 	</td>
-	<td></td>
+	<td><%= qbank.tests.size %></td>
 	<td><%= accepted(qbank.accept) %></td>
 	<td>
 		<% if current_user.id == qbank.user.id || current_user.role %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :answers
+  resources :results
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', 
   	confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' },
@@ -14,6 +16,8 @@ Rails.application.routes.draw do
     resources :tests do 
       resources :test_qbanks, except: [:edit, :update, :show]
     end
+    get "tests/:id/details", param: :id, :controller => 'tests', :action => 'details'
+    get "tests/:id/export_pdf", param: :id, :controller => 'tests', :action => 'export_pdf'
   end
   
   resources :users, only: [:index], path: 'administration/users'

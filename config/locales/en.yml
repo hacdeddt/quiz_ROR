@@ -40,6 +40,9 @@ en:
       qbank:
         category: "Lớp"
         subject: "Môn học"
+      test:
+        category: "Lớp"
+        subject: "Môn học"
     errors:
       messages:
         invalid: "không hợp lệ"
@@ -64,5 +67,11 @@ en:
               blank: "không được để trống"
             password:
               blank: "không được để trống"
+        test:
+          attributes:
+            category:
+              required: "chưa được chọn"
+            subject:
+              required: "chưa được chọn"
 
 

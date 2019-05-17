@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Total time:</strong>
+  <%= @result.total_time %>
+</p>
+
+<p>
+  <strong>Total score:</strong>
+  <%= @result.total_score %>
+</p>
+
+<p>
+  <strong>Test:</strong>
+  <%= @result.test_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @result.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_result_path(@result) %> |
+<%= link_to 'Back', results_path %>

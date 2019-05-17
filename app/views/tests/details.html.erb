@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
+		<div class="container-form" >
+			<h3 style="text-align: center;">Thông tin đề thi</h3>
+			<table class="table table-hover table-bordered">
+				<tr>
+					<th>Tên đề thi</th>
+					<td><%= @test.name %></td>
+				</tr>
+				<tr>
+					<th>Mô tả</th>
+					<td><%= @test.description %></td>
+				</tr>
+				<tr>
+					<th>Số câu hỏi</th>
+					<td><%= @test.qbanks.size %></td>
+				</tr>
+				<tr>
+					<th>Điểm tuyệt đối</th>
+					<td><%= @test.full_score %></td>
+				</tr>
+				<tr>
+					<th>Thời gian làm bài</th>
+					<td><%= @test.duration %> phút</td>
+				</tr>
+				<tr>
+					<th>Lớp</th>
+					<td><%= @test.category.name %></td>
+				</tr>
+				<tr>
+					<th>Môn học</th>
+					<td><%= @test.subject.name %></td>
+				</tr>
+				<tr>
+					<th>Người tạo</th>
+					<td>
+						<%= link_to user_path(@test.user.id) do %>
+							<%= @test.user.fullName %>
+						<% end %>
+					</td>
+				</tr>
+			</table>
+			<a href="export_pdf.pdf" target="_blank" class="btn btn-primary">Tải file pdf</a>
+			<div style="text-align: center;">
+				<%= link_to "Làm bài thi", user_test_path(params[:user_id]), class: "btn btn-success" %>
+			</div>
+		</div>
+	</div>
+</div>

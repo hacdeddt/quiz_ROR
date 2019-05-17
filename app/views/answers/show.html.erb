@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Q option:</strong>
+  <%= @answer.q_option %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @answer.user_id %>
+</p>
+
+<p>
+  <strong>Q score:</strong>
+  <%= @answer.q_score %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @answer.result_id %>
+</p>
+
+<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<%= link_to 'Back', answers_path %>

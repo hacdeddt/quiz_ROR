@@ -63,6 +63,9 @@ gem 'therubyracer', '~> 0.12.3'
 gem 'bundler-audit', '~> 0.6.1'
 # font-awesome
 gem 'font-awesome-sass'
+#export file pdf
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 
 # Use Redis adapter to run Action Cable in production

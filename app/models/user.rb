@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :qbanks
   has_many :tests
+  has_many :results
+  has_many :answers
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
