@@ -33,4 +33,8 @@ class SubjectPolicy < ApplicationPolicy
   def create?
     return true if @current_user.role
   end
+
+  def delete?
+    return true if @current_user.role
+  end
 end

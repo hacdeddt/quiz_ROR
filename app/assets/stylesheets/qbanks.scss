@@ -4,6 +4,7 @@
 .import_qbank .error {
     color: red !important;
 }
+
 .answer-correct {
 	background: #dff0d8;
 	color: green;
@@ -13,9 +14,21 @@
 	margin-left: -6px;
 	border: 1px solid black;
 }
+
+.answer-incorrect {
+	background: #fbcaca;
+	color: red;
+	padding: 6px;
+	border-radius: 6px;
+	font-weight: 600;
+	margin-left: -6px;
+	border: 1px solid black;
+}
+
 .bold {
 	font-weight: 600;
 }
+
 .background-quiz {
 	background: white;
 	padding: 10px;

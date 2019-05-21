@@ -1,8 +1,8 @@
 <%= provide(:title, @user.fullName)%>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-md-4">
-			<div class="table-personal-information">
+		<div class="col-xs-12 col-md-4 col-md-offset-1" id="tests">
+			<div class="table-personal-information" >
 
             	<% if @user.image.file.nil? %>
 	              <%= image_tag("avatar.png", width: "100px", height: "100px") %>
@@ -32,11 +32,26 @@
 					</tr>
 				</table>
 			</div>
+			<%= render partial: "test", collection: @tests %>
+			<div style="margin-bottom: 10px"></div>
+			<% if @tests.size >= 10 %>
+				<button class="btn btn-large btn-block btn-primary" id="view_all_tests">Xem tất cả các đề thi</button>
+			<% end %>
 		</div>
-		<div class="col-xs-12 col-sm-8">
-			<div class="table-personal-information table-post-user">
-				<h2>Bai trac nghiem user da lam</h2>
-			</div>
+		<div class="col-xs-12 col-sm-6" id="results">	
+			<div style="margin-top: -10px"></div>
+			<%= render partial: "result", collection: @results %>
+			<%= will_paginate @results %>
 		</div>
+
 	</div>
+	<div style="margin-bottom: 20px"></div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $("#view_all_tests").click(function(){
+	    $('#view_all_tests').remove();
+	    $('#tests').append("<%= j render partial: 'test', collection: @all_tests %>");
+	  });
+	});
+</script>

@@ -89,4 +89,7 @@ Rails.application.configure do
       Bullet.add_footer = true
       Bullet.raise = true
     end
+
+    # SSL protocol
+    #config.force_ssl = true
 end

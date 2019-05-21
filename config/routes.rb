@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   
-  resources :answers
-  resources :results
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', 
   	confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' },
@@ -15,9 +13,14 @@ Rails.application.routes.draw do
   	end
     resources :tests do 
       resources :test_qbanks, except: [:edit, :update, :show]
+      resources :results, path: :examine, only: [:create, :show] do
+        resources :answers, only: [:show, :create]
+      end
+      get "results/:id/result_details", param: :id, to: 'results#result_details', as: :results_details
     end
-    get "tests/:id/details", param: :id, :controller => 'tests', :action => 'details'
-    get "tests/:id/export_pdf", param: :id, :controller => 'tests', :action => 'export_pdf'
+    resources :results, only: [:index, :destroy]
+    get "tests/:id/details", param: :id, to:'tests#details', as: :test_details
+    get "tests/:id/export_pdf", param: :id, to: "tests#export_pdf", as: :tests_export_pdf, defaults: { format: 'pdf' }
   end
   
   resources :users, only: [:index], path: 'administration/users'
@@ -27,7 +30,7 @@ Rails.application.routes.draw do
 
   resources :administration, only: [:index, :update]
 
-  put "qbanks/delete/:id", param: :id,:controller => 'qbanks', :action => 'delete' 
+  put "qbanks/delete/:id", param: :id, to: 'qbanks#delete', as: :qbanks_delete
   patch "qbanks/delete/:id", param: :id,:controller => 'qbanks', :action => 'delete' 
   put "qbanks/accepted/:id", param: :id,:controller => 'qbanks', :action => 'accepted' 
   patch "qbanks/accepted/:id", param: :id,:controller => 'qbanks', :action => 'accepted'
@@ -37,6 +40,18 @@ Rails.application.routes.draw do
   get "qbanks/download_file_excel_sample"
   get "administration/accept_qbank"
   get "administration/qbank_deleted"
+
+  put "results/delete/:id", param: :id, to: "results#delete", as: :results_delete
+  patch "results/delete/:id", param: :id, to: "results#delete"
+
+  put "tests/delete/:id", param: :id, to: "tests#delete", as: :tests_delete
+  patch "tests/delete/:id", param: :id, to: "tests#delete"
+
+  put "categories/delete/:id", param: :id, to: "categories#delete", as: :categories_delete
+  patch "categories/delete/:id", param: :id, to: "categories#delete"
+
+  put "subjects/delete/:id", param: :id, to: "subjects#delete", as: :subjects_delete
+  patch "subjects/delete/:id", param: :id, to: "subjects#delete"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

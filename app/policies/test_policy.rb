@@ -23,6 +23,14 @@ class TestPolicy < ApplicationPolicy
   end
 
   def index?
-    return true if @current_user.role
+    return true if @current_user.role 
+  end
+
+  def add_question?
+    return true if (@current_user.role || @current_user.id == @test.user.id)
+  end
+
+  def delete?
+    return true if (@current_user.role || @current_user.id == @test.user.id)
   end
 end

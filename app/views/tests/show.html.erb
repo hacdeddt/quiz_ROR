@@ -98,9 +98,6 @@ window.location="<%= root_path %>"; // sau khoảng thời gian sẽ tự độn
 		<br>
 		<div class="row"  style="margin-top:5px;">
 			<div class="col-md-8">
-				<form method="post" action="/users/<%= params[:user_id] %>/tests" id="quiz_form" data-remote="true" >
-					<input type="hidden" name="rid" value="3">
-					<input type="hidden" name="noq" value="<%= noq %>">
 
 					<% 	abc= ['A','B','C','D']
 					@test.qbanks.includes(mp3_attachment: :blob).each_with_index do |qbank, qk| %>
@@ -150,7 +147,6 @@ window.location="<%= root_path %>"; // sau khoảng thời gian sẽ tự độn
 
 
 					<% end %>
-				</form>
 			</div>
 			<div class="col-md-4" style="padding-bottom:80px;">
 				<!-- Chỗ này -->
@@ -192,38 +188,10 @@ window.location="<%= root_path %>"; // sau khoảng thời gian sẽ tự độn
 	<button class="btn btn-warning"   onClick="javascript:review_later();" style="margin-top:2px;" >Review later</button>
 	
 	<button class="btn btn-info"  onClick="javascript:clear_response();"  style="margin-top:2px;"  >Clear</button>
-
-	<!-- <button class="btn btn-success"  id="backbtn" style="visibility:hidden;" onClick="javascript:show_back_question();"  style="margin-top:2px;" >Back</button>
-	
-	<button class="btn btn-success" id="nextbtn" onClick="javascript:show_next_question();" style="margin-top:2px;" >Next</button> -->
-		
-	<a class="btn btn-danger submit-quiz"  onClick="javascript:cancelmove();" style="margin-top:2px;" >Submit Quiz</a>
+	<%= link_to "Xong", user_path(current_user), class: "btn btn-danger submit-quiz" %>
 </div>
 
 <script>
-
-	//ajax
-    $(document).on('click', 'a.submit-quiz', function (e) {
-        e.preventDefault();
-        
-            var sleep_diaryData = $('#quiz_form').serializeArray().reduce(function (obj, item) {
-                obj[item.name] = item.value;
-                return obj;
-                console.log(obj);
-            }, {});
-
-            $.ajax({
-                url: '/users/<%= current_user.id %>/tests',
-                method: 'POST',
-                data: sleep_diaryData,
-                async: false,
-                success: function (response) {
-                    console.log(response);
-                    //window.location = redirectUrl;
-                }
-            });
-    });
-    //end ajax
 
 //nhớ đổi số câu hỏi
 var noq=<%= noq %>;
@@ -265,51 +233,7 @@ function show_question(vqn){
 	// last qn
 	qn=vqn;
 	lqn=vqn;
-	save_answer(lqn);
 	
-}
-
-function show_next_question(){
-	change_color(qn);
-
-	if((parseInt(qn)+1) < noq){
-		fide_all_question();
-		qn=(parseInt(qn)+1);
-		var did="#q"+qn;
-		$(did).css('display','block');
-	}
-	// hide show next back btn
-	if(qn >= 1){
-		$('#backbtn').css('visibility','visible');
-	}
-	if((parseInt(qn)+1) == noq){
-		$('#nextbtn').css('visibility','hidden');
-	}
-	// last qn
-	lqn=qn;	
-	change_color(lqn);
-	save_answer(lqn);	
-}
-
-function show_back_question(){
-	change_color(qn);
-	if((parseInt(qn)-1) >= 0 ){
-		fide_all_question();
-		qn=(parseInt(qn)-1);
-		var did="#q"+qn;
-		$(did).css('display','block');
-	}
-	// hide show next back btn
-	if(qn < noq){
-		$('#nextbtn').css('visibility','visible');
-	}
-	if(qn == 0){
-		$('#backbtn').css('visibility','hidden');
-	}
-	// last qn
-	lqn=qn;	
-	change_color(lqn);
-	save_answer(lqn);
 }
 
 function change_color(qn){
@@ -380,44 +304,7 @@ function review_later(){
 	
 }
 
-function save_answer(qn){
-	
-								// signal 1
-								$('#save_answer_signal1').css('backgroundColor','#00ff00');
-								setTimeout(function(){
-									$('#save_answer_signal1').css('backgroundColor','#666666');		
-								},5000);
-								
-								var str = $( "form" ).serialize();
 
-
-						// var formData = {user_answer:str};
-						$.ajax({
-							type: "GET",
-							data : str,
-							success: function(data){
-							// signal 1
-							$('#save_answer_signal2').css('backgroundColor','#00ff00');
-							setTimeout(function(){
-								$('#save_answer_signal2').css('backgroundColor','#666666');		
-							},5000);
-
-						},
-						error: function(xhr,status,strErr){
-								//alert(status);
-								
-							// signal 1
-							$('#save_answer_signal2').css('backgroundColor','#ff0000');
-							setTimeout(function(){
-								$('#save_answer_signal2').css('backgroundColor','#666666');		
-							},5500);
-
-						}	
-					});
-
-
-
-					}
 	var ctime=0;
 	var ind_time=new Array();
 	show_question('0');
@@ -429,16 +316,3 @@ function save_answer(qn){
 
 </script>
 
-
-
-
-
-<div  id="warning_div" style="padding:10px; position:fixed;z-index:100;display:none;width:100%;border-radius:5px;height:200px; border:1px solid #dddddd;left:4px;top:70px;background:#ffffff;">
-	<center><b> Bạn thực sự muốn nộp bài?</b> <br><br>
-		<span id="processing"></span>
-
-		<a href="javascript:cancelmove();"   class="btn btn-danger"  style="cursor:pointer;">Hủy</a> &nbsp; &nbsp; &nbsp; &nbsp;
-		<a href="javascript:submit_quiz();"   class="btn btn-info"  style="cursor:pointer;">Nộp bài</a>
-
-		</center>
-</div>

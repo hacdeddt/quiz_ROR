@@ -3,8 +3,8 @@ class QbanksController < ApplicationController
   after_action :approval, only: [:update]
 
   def index
-    @subjects = Subject.all
-    @categories = Category.all
+    @subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
     category_id = params[:category_id]
     subject_id = params[:subject_id]
     user_id = params[:of_me]
@@ -35,13 +35,13 @@ class QbanksController < ApplicationController
 
   def new
   	@qbank = Qbank.new
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
   end
 
   def create
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
     @qbank = Qbank.new(qbank_params)
     respond_to do |format|
       if @qbank.save && verify_recaptcha(model: @qbank)
@@ -56,18 +56,16 @@ class QbanksController < ApplicationController
 
   def edit
     authorize @qbank
-    @subjects = Subject.all
-    @categories = Category.all
+    @subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
   end
 
   def update
     authorize @qbank
-  	@subjects = Subject.all
-  	@categories = Category.all
-    if !params[:mp3].nil?
-      if @qbank.mp3.purge.nil?
-        @qbank.mp3.attach(params[:mp3])
-      end
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
+    if qbank_params['mp3'].present?
+      @qbank.mp3.purge.nil?
     end
     respond_to do |format|
       if @qbank.update(qbank_params) && verify_recaptcha(model: @qbank)
@@ -84,8 +82,7 @@ class QbanksController < ApplicationController
     authorize @qbank
     @qbank.update(is_delete: 1)
     respond_to do |format|
-      format.html { redirect_to user_qbanks_path(current_user), notice: 'Đã xóa câu hỏi.' }
-      format.json { head :no_content }
+      format.js {flash.now[:notice] = "Đã xóa câu hỏi."}
     end
   end
 
@@ -112,6 +109,8 @@ class QbanksController < ApplicationController
 
   def destroy
   	if (current_user.role)
+      @qbank.mp3.purge
+      QuizDeletedMailer.notify_delete_quiz(@qbank).deliver
 	    @qbank.destroy
       @qbanks = Qbank.where("accept = 0 and is_delete = 0").size
 	    respond_to do |format|

@@ -1,4 +1,4 @@
-<tr>
+<tr id="qbank_<%= qbank.id %>">
 	<td>
 		<% if qbank.question.include?('<img')%>
 			<% qbank.question[qbank.question[/style=".*"/]] = '' %>
@@ -25,14 +25,10 @@
 			<%= link_to edit_user_qbank_path(current_user, qbank) do %>
 				<i class="fa fa-pencil" aria-hidden="true"></i>
 			<% end %>
-
-			<a data-confirm="Are you sure?" rel="nofollow" data-method="put" href="/qbanks/delete/<%= qbank.id %>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			
+			<%= link_to qbanks_delete_path(qbank.id), remote: true, data: {confirm: "Bạn có chắc muốn xóa không?"}, method: :put do%>
+				<i class="fa fa-trash" aria-hidden="true"></i>
+			<% end %>
 		<%end %>
 	</td>
-	<% if current_user.role %>
-	<td><%= link_to user_qbank_path(current_user, qbank), method: :delete, data: { confirm: 'Are you sure?'} do %>
-			<i class="fa fa-times" aria-hidden="true"></i>
-		<%end %>
-	</td>
-	<% end %>
 </tr>

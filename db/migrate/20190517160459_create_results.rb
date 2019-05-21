@@ -1,8 +1,8 @@
 class CreateResults < ActiveRecord::Migration[5.2]
   def change
     create_table :results do |t|
-      t.integer :total_time
-      t.float :total_score
+      t.float :total_time
+      t.float :total_score, default: 0
       t.integer :test_id
       t.integer :user_id
 

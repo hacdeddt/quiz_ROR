@@ -1,10 +1,10 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :delete]
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.where("is_delete = 0")
     authorize @categories
   end
 
@@ -55,6 +55,14 @@ class CategoriesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def delete
+    authorize @category
+    @category.update(is_delete: 1)
+    respond_to do |format|
+      format.js {flash.now[:notice] = "Đã xóa lớp."}
     end
   end
 

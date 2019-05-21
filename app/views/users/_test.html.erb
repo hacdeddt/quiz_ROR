@@ -1,0 +1,49 @@
+<% if test.qbanks.size > 0 %>
+<div class="table-personal-information table-post-user" style="margin-top: 10px;" id="test_<%= test.id %>">
+	<table>
+		<tr>
+			<td>
+				Đề thi: <%= test.name %>,
+				<% if test.description.present? %>
+					Mô tả: <%= raw truncate(test.description, :length => 100) %>
+				<% end %>
+				<%= link_to '... chi tiết', user_test_details_path(current_user, test.id) %>
+			</td>
+			<td>
+				<div class="dropdown" style="float:right;" id="dropdown-test-<%= test.id %>">
+					<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+					<div class="dropdown-content" id="dropdown-content-test-<%= test.id %>">
+						<%= link_to 'Thi', user_test_details_path(current_user, test.id) %>
+
+						<% if current_user.id == params[:id].to_i %>
+						<%= link_to "Chỉnh sửa", edit_user_test_path(current_user, test.id) %>
+						<%= link_to "Xóa", tests_delete_path(test.id), remote: true, data: {confirm: "Bạn có chắc muốn xóa không?"}, method: :put %>
+						<% end %>
+					</div>
+				</div>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#dropdown-test-<%= test.id %>').click(function(){
+							$('#dropdown-content-test-<%= test.id %>').toggle();
+						});
+					});
+					$(document).click(function (e) {
+					    e.stopPropagation();
+					    var container = $("#dropdown-test-<%= test.id %>");
+
+					    //check if the clicked area is dropDown or not
+					    if (container.has(e.target).length === 0) {
+					        $('#dropdown-content-test-<%= test.id %>').hide();
+					    }
+					});
+				</script>
+
+			</td>
+		</tr>
+
+	</table>
+	<hr style="margin-top: 7px;margin-bottom: 7px;">
+			<%= test.results_count %> lượt thi
+
+</div>
+<% end %>

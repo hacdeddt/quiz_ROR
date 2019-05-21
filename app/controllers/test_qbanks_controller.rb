@@ -5,9 +5,9 @@ class TestQbanksController < ApplicationController
   # GET /test_qbanks.json
   def index
     @tests = Test.find(params[:test_id])
-    authorize @tests
-    @subjects = Subject.all
-    @categories = Category.all
+    authorize @tests, :add_question?
+    @subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
     category_id = params[:category_id]
     subject_id = params[:subject_id]
     user_id = params[:of_me]
@@ -57,8 +57,6 @@ class TestQbanksController < ApplicationController
       if @test_qbank.save
         @test_bank_id = TestQbank.find_by(qbank_id: params[:qbank_id], test_id: params[:test_id])
         @current_user_id = current_user.id
-        format.html { redirect_to @test_qbank, notice: 'Test qbank was successfully created.' }
-        format.json { render :show, status: :created, location: @test_qbank }
         format.js {flash.now[:notice] = "Đã thêm câu hỏi vào đề thi."}
       else
         format.html { render :new }
@@ -77,8 +75,6 @@ class TestQbanksController < ApplicationController
     @qbank_id = @test_qbank.qbank_id
     @test_qbank.destroy
     respond_to do |format|
-      format.html { redirect_to test_qbanks_url, notice: 'Test qbank was successfully destroyed.' }
-      format.json { head :no_content }
       format.js {flash.now[:notice] = "Đã xóa câu hỏi ra khỏi đề thi."}
     end
   end

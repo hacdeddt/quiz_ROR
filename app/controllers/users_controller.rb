@@ -18,6 +18,9 @@ class UsersController < ApplicationController
 
 	def show
 		authorize @user
+		@results = @user.results.includes(:test).where("is_delete = 0").paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+		@tests = @user.tests.where("is_delete = 0").paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+		@all_tests = @user.tests.offset(10).where("is_delete = 0").order('created_at desc')
 	end
 
 	def update

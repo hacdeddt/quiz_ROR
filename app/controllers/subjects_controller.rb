@@ -1,10 +1,10 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: [:show, :edit, :update, :destroy]
+  before_action :set_subject, only: [:show, :edit, :update, :destroy, :delete]
 
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.all
+    @subjects = Subject.where("is_delete = 0")
     authorize @subjects
   end
 
@@ -55,6 +55,14 @@ class SubjectsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @subject.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def delete
+    authorize @subject
+    @subject.update(is_delete: 1)
+    respond_to do |format|
+      format.js {flash.now[:notice] = "Đã xóa môn học."}
     end
   end
 

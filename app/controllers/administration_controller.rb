@@ -1,6 +1,7 @@
 class AdministrationController < ApplicationController
   def index
   	@users = User.where("created_at >= ?",1.week.ago).limit(10).order("created_at DESC")
+  	@tests = Test.includes(:user).where("created_at >= ?",1.week.ago).order("created_at DESC")
   end
 
   def accept_qbank

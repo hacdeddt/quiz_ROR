@@ -12,6 +12,10 @@
 					<td><%= @test.description %></td>
 				</tr>
 				<tr>
+					<th>Số lượt thi</th>
+					<td><%= @test.results_count %></td>
+				</tr>
+				<tr>
 					<th>Số câu hỏi</th>
 					<td><%= @test.qbanks.size %></td>
 				</tr>
@@ -40,9 +44,10 @@
 					</td>
 				</tr>
 			</table>
-			<a href="export_pdf.pdf" target="_blank" class="btn btn-primary">Tải file pdf</a>
+			
+			<%= link_to "Tải file pdf", user_tests_export_pdf_path(current_user, params[:id]), class:"btn btn-primary", target: '_blank' %>
 			<div style="text-align: center;">
-				<%= link_to "Làm bài thi", user_test_path(params[:user_id]), class: "btn btn-success" %>
+				<%= button_to 'Làm bài thi', user_test_results_path(current_user, params[:id]), params: {'test_id' => params[:id], 'user_id' => current_user.id}, class: "btn btn-success" %>
 			</div>
 		</div>
 	</div>

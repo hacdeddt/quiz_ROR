@@ -1,0 +1,7 @@
+$('#results').append("<%= j render partial: 'result', collection: @results %>");
+<% if @results.next_page %>
+	$('#results .pagination').replaceWith("<%= j render partial: 'result', collection: @results %>");
+<% else %>
+	$('#results .pagination').remove();
+<% end %>
+<% sleep 0.1 %>

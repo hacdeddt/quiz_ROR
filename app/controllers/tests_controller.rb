@@ -1,24 +1,28 @@
 class TestsController < ApplicationController
-	before_action :set_test, only: [:edit, :update, :test_params, :destroy, :show, :export_pdf, :details]
+	before_action :set_test, only: [:edit, :update, :test_params, :destroy, :show, :export_pdf, :details, :delete]
 
   def index
-  	@tests = Test.paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    if params[:is_delete].nil?
+      @tests = Test.where("is_delete = 0").paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    else
+      @tests = Test.where("is_delete = ?",params[:is_delete]).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    end
+  	
     authorize @tests
   end
 
   def show
-    Test.update_view(@test)
   end
 
   def new
   	@test = Test.new
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
   end
 
   def create
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
     @test = Test.new(test_params)
     respond_to do |format|
       if @test.save && verify_recaptcha(model: @test)
@@ -33,14 +37,14 @@ class TestsController < ApplicationController
 
   def edit
     authorize @test
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
   end
 
   def update
     authorize @test
-  	@subjects = Subject.all
-  	@categories = Category.all
+  	@subjects = Subject.where("is_delete = 0")
+    @categories = Category.where("is_delete = 0")
     respond_to do |format|
       if @test.update(test_params) && verify_recaptcha(model: @test)
         format.html { redirect_to user_test_test_qbanks_path(current_user, @test), notice: 'Cập nhật đề thi thành công. Tiếp theo là chỉnh sửa câu hỏi' }
@@ -74,7 +78,14 @@ class TestsController < ApplicationController
   end
 
   def details
+  end
 
+  def delete
+    authorize @test
+    @test.update(is_delete: 1)
+    respond_to do |format|
+      format.js {flash.now[:notice] = "Đã xóa đề thi."}
+    end
   end
 
   private

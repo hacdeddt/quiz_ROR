@@ -16,13 +16,12 @@
   <tbody>
     <% @results.each do |result| %>
       <tr>
-        <td><%= result.total_time %></td>
+        <td><%= convert_to_time(result.total_time) if result.total_time.present? %></td>
         <td><%= result.total_score %></td>
         <td><%= result.test_id %></td>
         <td><%= result.user_id %></td>
-        <td><%= link_to 'Show', result %></td>
-        <td><%= link_to 'Edit', edit_result_path(result) %></td>
-        <td><%= link_to 'Destroy', result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  
+        <td><%= link_to 'Destroy', user_result_path(current_user,result.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +29,3 @@
 
 <br>
 
-<%= link_to 'New Result', new_result_path %>

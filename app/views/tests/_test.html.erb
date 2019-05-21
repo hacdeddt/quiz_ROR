@@ -7,12 +7,12 @@
 	<td><%= raw test.description %></td>
 	<td><%= test.full_score %></td>
 	<td><%= test.duration %></td>
-	<td><%= test.views %></td>
+	<td><%= test.results.size %></td>
 	<td><%= link_to edit_user_test_path(current_user, test) do %>
 			<i class="fa fa-pencil" aria-hidden="true"></i>
 		<% end %>
 	</td>
-	<td><%= link_to user_test_path(current_user,test), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do %>
+	<td><%= link_to tests_delete_path(test.id), remote: true, data: {confirm: "Bạn có chắc muốn xóa không?"}, method: :put do %>
 			<i class="fa fa-trash" aria-hidden="true"></i>
 		<%end %>
 	</td>

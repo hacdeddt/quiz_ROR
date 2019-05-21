@@ -1,0 +1,237 @@
+<script type="text/javascript">
+	$('#container_application').removeClass('container');
+</script>
+
+<style>
+	td{
+		font-size:14px;
+		padding:4px;
+	}	
+</style>
+
+
+
+
+
+<div class="container" >
+	<div class="container-form" style="margin-top: -20px;">
+		<div>
+			<div style="float:right; margin-right:10px;font-size: 17px;" >
+				<% result = Result.find(params[:id]) %>
+				
+					Tổng điểm: <span style="color: red;" >
+									<%= result.total_score %>/<%= @test.full_score%>
+								</span>
+				<span style="margin-left: 10px;">
+					Thời gian làm bài: <%= convert_to_time(result.total_time) %>
+				</span>
+			</div>
+
+			<div style="float:left;" >
+				<h4><%= @test.name %></h4>
+			</div>
+
+			<div style="clear:both;"></div>
+			<% noq = @test.qbanks.size %>
+		</div>
+
+		<br>
+		<div class="row"  style="margin-top:5px;">
+			<div class="col-md-8">
+					<% 	abc= ['A','B','C','D']
+					@test.qbanks.includes(mp3_attachment: :blob).each_with_index do |qbank, qk| %>
+					<div id="q<%= qk %>" class="question_div">
+						<div class="question_container" >
+							<span style="vertical-align: top">Câu hỏi <%= qk + 1 %>: </span>
+							<% if qbank.mp3.attached?  %>
+								<audio controls style="height: 45px;">
+									<source src="<%= url_for(qbank.mp3) %>" type="audio/mpeg">
+										Your browser does not support the audio element.
+								</audio>
+							<% end %>
+							<%= raw qbank.question %>
+						</div>
+						<div class="option_container" >
+							<% answer = Answer.find_by(qbank_id: qbank.id, result_id: params[:id]) %>
+						  <% if !answer.nil? %>
+							<% if answer.q_option == qbank.option_match %>
+								<div style="display: none;">
+									<input type="radio" name="" id="answer_value_<%= qk %>" value="" checked="checked"/>
+								</div>
+							<% else %>
+								<div style="display: none;">
+									<input type="radio" id="answer_value_<%= qk %>">
+								</div>
+							<% end %>
+						  <% end %>
+								<div class="op">
+									<span 
+										<%="class=answer-correct" if qbank.option_match == "A" %> 
+										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'A' %> 
+									>
+										A) <%= raw qbank.optionA %>
+									</span>
+								</div>
+						
+								<div class="op">
+									<span <%="class=answer-correct" if qbank.option_match == "B" %> 
+										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'B' %>
+									>
+										B)  <%= raw qbank.optionB %>
+									</span>
+								</div>
+
+								<div class="op"> 
+									<span <%="class=answer-correct" if qbank.option_match == "C" %> 
+										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'C' %>
+									>
+										C) <%= raw qbank.optionC %> 
+									</span>
+								</div>
+
+								<div class="op">
+									<span <%="class=answer-correct" if qbank.option_match == "D" %> 
+										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'D' %>
+									>
+										D) <%= raw qbank.optionD %> 
+									</span>
+								</div>				
+						</div> 
+						<div>
+							<% if qbank.answer.present? %>
+								<span style="font-weight: 600">Đáp án chi tiết:</span> <%= raw qbank.answer %>
+							<% end %>
+						</div>
+					</div>
+
+					<% end %>
+			</div>
+
+			<div class="col-md-4" style="padding-bottom:80px;">
+				<b> Câu hỏi</b>
+				<div>
+				<% for j in 0...noq do %>
+					<div class="qbtn" onClick="javascript:show_question('<%= j %>');" id="qbtn<%= j %>"  ><%= j+1 %></div>
+				<% end %>
+					<div style="clear:both;"></div>
+
+				</div>
+				<br>
+				<hr>
+				<br>
+				<div>
+					<table>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#449d44;">&nbsp;</div> Trả lời đúng </td></tr>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#c9302c;">&nbsp;</div> Trả lời sai </td></tr>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#212121;">&nbsp;</div> Chưa trả lời</td></tr>
+					</table>
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="footer_buttons">
+	
+	
+	<%= link_to 'Trở lại trang cá nhân', user_path(current_user.id), class: "btn btn-info", style: "margin-top:2px;" %>
+		
+</div>
+
+<script>
+//nhớ đổi số câu hỏi
+var noq=<%= noq %>;
+var qn=0;
+var lqn=0;
+var abc = ['A','B','C','D'];
+
+function fide_all_question(){
+	
+	for(var i=0; i < noq; i++){
+		
+		var did="#q"+i;
+		$(did).hide();
+	}
+}
+
+
+function show_question(vqn){
+	fide_all_question();
+	var did="#q"+vqn;
+	$(did).css('display','block');
+}
+
+///make color
+	for(var i=0; i < noq; i++){	
+		var did='#qbtn'+i;
+		var green=0;
+		var answer_value="answer_value_"+i;
+		if(document.getElementById(answer_value)){
+			if(document.getElementById(answer_value).checked == true){	
+				$(did).css('backgroundColor','#449d44');
+				$(did).css('color','#ffffff');	
+			}
+			else {
+				$(did).css('backgroundColor','#c9302c');
+				$(did).css('color','#ffffff');
+			}
+		}
+		else {
+			$(did).css('backgroundColor','#212121');
+			$(did).css('color','#ffffff');
+		}
+
+	}
+						
+
+	var ctime=0;
+	var ind_time=new Array();
+	show_question('0');
+
+(function (global) {
+
+	if(typeof (global) === "undefined")
+	{
+		throw new Error("window is undefined");
+	}
+
+    var _hash = "!";
+    var noBackPlease = function () {
+        global.location.href += "#";
+
+		// making sure we have the fruit available for juice....
+		// 50 milliseconds for just once do not cost much (^__^)
+        global.setTimeout(function () {
+            global.location.href += "!";
+        }, 50);
+    };
+	
+	// Earlier we had setInerval here....
+    global.onhashchange = function () {
+        if (global.location.hash !== _hash) {
+            global.location.hash = _hash;
+        }
+    };
+
+    global.onload = function () {
+        
+		noBackPlease();
+
+		// disables backspace on page except on input fields and textarea..
+		document.body.onkeydown = function (e) {
+            var elm = e.target.nodeName.toLowerCase();
+            if (e.which === 8 && (elm !== 'input' && elm  !== 'textarea')) {
+                e.preventDefault();
+            }
+            // stopping event bubbling up the DOM tree..
+            e.stopPropagation();
+        };
+		
+    };
+
+})(window);
+
+</script>

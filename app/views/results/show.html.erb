@@ -1,24 +1,326 @@
-<p id="notice"><%= notice %></p>
+<script type="text/javascript">
+	$('#container_application').removeClass('container');
+</script>
 
-<p>
-  <strong>Total time:</strong>
-  <%= @result.total_time %>
-</p>
+<style>
+	td{
+		font-size:14px;
+		padding:4px;
+	}	
+</style>
 
-<p>
-  <strong>Total score:</strong>
-  <%= @result.total_score %>
-</p>
 
-<p>
-  <strong>Test:</strong>
-  <%= @result.test_id %>
-</p>
+<script>
 
-<p>
-  <strong>User:</strong>
-  <%= @result.user_id %>
-</p>
+	var Timer;
+	var TotalSeconds;
 
-<%= link_to 'Edit', edit_result_path(@result) %> |
-<%= link_to 'Back', results_path %>
+
+	function CreateTimer(TimerID, Time) {
+		Timer = document.getElementById(TimerID);
+		TotalSeconds = Time;
+
+		UpdateTimer()
+		window.setTimeout("Tick()", 1000);
+	}
+
+	function Tick() {
+		if (TotalSeconds <= 0) {
+			alert("Time's up!")
+			return;
+		}
+
+		TotalSeconds -= 1;
+		UpdateTimer()
+		window.setTimeout("Tick()", 1000);
+	}
+
+	function UpdateTimer() {
+		var Seconds = TotalSeconds;
+
+		var Days = Math.floor(Seconds / 86400);
+		Seconds -= Days * 86400;
+
+		var Hours = Math.floor(Seconds / 3600);
+		Seconds -= Hours * (3600);
+
+		var Minutes = Math.floor(Seconds / 60);
+		Seconds -= Minutes * (60);
+
+
+		var TimeStr = ((Days > 0) ? Days + " days " : "") + LeadingZero(Hours) + ":" + LeadingZero(Minutes) + ":" + LeadingZero(Seconds)
+
+
+		Timer.innerHTML = TimeStr;
+	}
+
+
+	function LeadingZero(Time) {
+
+		return (Time < 10) ? "0" + Time : + Time;
+
+	}
+
+//var myCountdown1 = new Countdown({time:<?php echo $seconds;?>, rangeHi:"hour", rangeLo:"second"});
+setTimeout(submitform,'<%= @test.duration*60*1000%>');//sau 1 thời gian thì sẽ tự động submit form
+function submitform(){
+	document.getElementById("quiz_form").submit();
+	alert('Time Over');
+}
+
+
+
+
+
+</script>
+
+
+
+<div class="container" >
+	<div class="container-form" style="margin-top: -20px;">
+		<div>
+			<div style="float:right; margin-right:10px;" >
+				Thời gian còn lại: <span id='timer' >
+					<script type="text/javascript">
+	//set thời gian ở đây
+						window.onload = CreateTimer("timer", <%= @test.duration*60 %>);</script>
+				</span>
+			</div>
+
+			<div style="float:left;" >
+				<h4><%= @test.name %></h4>
+			</div>
+
+			<div style="clear:both;"></div>
+			<% 
+				noq = @test.qbanks.size 
+				score = @test.full_score / noq
+			%>
+		</div>
+
+		<br>
+		<div class="row"  style="margin-top:5px;">
+			<div class="col-md-8">
+				
+				<%= form_tag user_test_result_answers_path(current_user.id, params[:test_id], params[:id]), id: "quiz_form", class: "form-inline import_qbank" do %>
+
+					<input type="hidden" name="result_id" value="<%= params[:id] %>">
+					<input type="hidden" name="user_id" value="<%= current_user.id %>">
+					<input type="hidden" name="noq" value="<%= noq %>">
+
+					<% 	abc= ['A','B','C','D']
+					@test.qbanks.includes(mp3_attachment: :blob).each_with_index do |qbank, qk| %>
+					<div id="q<%= qk %>" class="question_div">
+					<input type="hidden" name="qbank_id[<%= qk %>]" value="<%= qbank.id %>">
+					
+
+						<div class="question_container" >
+							<span style="vertical-align: top">Câu hỏi <%= qk + 1 %>: </span>
+							<% if qbank.mp3.attached?  %>
+								<audio controls style="height: 45px;">
+									<source src="<%= url_for(qbank.mp3) %>" type="audio/mpeg">
+										Your browser does not support the audio element.
+								</audio>
+							<% end %>
+							<%= raw qbank.question %>
+						</div>
+						<div class="option_container" >
+
+							<div class="op">
+								<label class="container-radio" style="font-weight: normal;"> 
+									<input type="radio" name="q_option[<%= qk %>]"  id="answer_value_<%= qk %>_A" value="A"> A) <%= raw qbank.optionA if !qbank.hide_option %> <span class="checkmark"></span>
+								</label>
+							</div>
+							
+
+							<div class="op">
+								<label class="container-radio" style="font-weight: normal;"> 
+									<input type="radio" name="q_option[<%= qk %>]"  id="answer_value_<%= qk %>_B" value="B">B)  <%= raw qbank.optionB if !qbank.hide_option %> <span class="checkmark"></span>
+								</label>
+							</div>
+
+							<div class="op"> 
+								<label class="container-radio" style="font-weight: normal;"> 
+									<input type="radio" name="q_option[<%= qk %>]"  id="answer_value_<%= qk %>_C" value="C">C) <%= raw qbank.optionC if !qbank.hide_option %> <span class="checkmark"></span>
+								</label>
+							</div>
+
+							<div class="op">
+								<label class="container-radio" style="font-weight: normal;">  
+									<input type="radio" name="q_option[<%= qk %>]"  id="answer_value_<%= qk %>_D" value="D">D) <%= raw qbank.optionD if !qbank.hide_option %> <span class="checkmark"></span>
+								</label>
+							</div>
+
+						</div> 
+					</div>
+
+					<% end %>
+					<%= submit_tag "Submit Quiz", id: "primaryButton", style: "display: none;", data: { confirm: "Bạn có chắc muốn nộp bài?"} %>
+				<% end %>
+			</div>
+			<div class="col-md-4" style="padding-bottom:80px;">
+				<!-- Chỗ này -->
+				<b> Câu hỏi</b>
+				<div>
+					<% for j in 0...noq do %>
+
+					<div class="qbtn" onClick="javascript:show_question('<%= j %>');" id="qbtn<%= j %>"  ><%= j+1 %></div>
+					<% end %>
+					<div style="clear:both;"></div>
+
+				</div>
+
+
+				<br>
+				<hr>
+				<br>
+				<div>
+
+					<table>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#449d44;">&nbsp;</div> Đã trả lời </td></tr>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#c9302c;">&nbsp;</div> Chưa trả lời  </td></tr>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#ec971f;">&nbsp;</div> Xem lại sau </td></tr>
+						<tr><td style="font-size:12px;"><div class="qbtn" style="background:#212121;">&nbsp;</div> Chưa xem  </td></tr>
+					</table>
+
+					<div style="clear:both;"></div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="footer_buttons">
+	<button class="btn btn-warning" onClick="javascript:review_later();" style="margin-top:2px;" >Review later</button>
+	
+	<button class="btn btn-info" onClick="javascript:clear_response();"  style="margin-top:2px;"  >Clear</button>
+		
+	<button class="btn btn-danger submit-quiz" onclick="document.getElementById('primaryButton').click()" style="margin-top:2px;" >Nộp bài</button>
+</div>
+
+<script>
+//nhớ đổi số câu hỏi
+var noq=<%= noq %>;
+var qn=0;
+var lqn=0;
+var abc = ['A','B','C','D'];
+
+function fide_all_question(){
+	
+	for(var i=0; i < noq; i++){
+		
+		var did="#q"+i;
+		$(did).hide();
+	}
+}
+
+
+function show_question(vqn){
+	change_color(vqn);
+	fide_all_question();
+	var did="#q"+vqn;
+	$(did).css('display','block');
+	// hide show next back btn
+	if(vqn >= 1){
+		$('#backbtn').css('visibility','visible');
+	}
+	
+	if(vqn < noq){
+		$('#nextbtn').css('visibility','visible');
+	}
+	if((parseInt(vqn)+1) == noq){
+
+		$('#nextbtn').css('visibility','hidden');
+	}
+	if(vqn == 0){
+		$('#backbtn').css('visibility','hidden');
+	}
+	
+	// last qn
+	qn=vqn;
+	lqn=vqn;
+	
+}
+
+function change_color(qn){
+	var did='#qbtn'+qn;
+	var q_type='#q_type'+lqn;
+	
+	// if not answered then make red
+	// alert($(did).css('backgroundColor'));
+	if($(did).css('backgroundColor') != 'rgb(68, 157, 68)' && $(did).css('backgroundColor') != 'rgb(236, 151, 31)'){
+		$(did).css('backgroundColor','#c9302c');
+		$(did).css('color','#ffffff');
+	}
+	
+	// answered make green
+	if(lqn >= '0' && $(did).css('backgroundColor') != 'rgb(236, 151, 31)'){
+		var ldid='#qbtn'+lqn;
+		var green=0;
+		for(var k=0; k<4; k++){
+			var answer_value="answer_value_"+lqn+'_'+abc[k];
+			if(document.getElementById(answer_value)){
+				if(document.getElementById(answer_value).checked == true){	
+					green=1;
+				}
+			}
+		}
+		if(green==1){			
+			$(ldid).css('backgroundColor','#449d44');
+			$(ldid).css('color','#ffffff');	
+		}				
+	}
+	
+}
+
+// clear radio btn response
+function clear_response(){
+
+	for(var k=0; k<4; k++){
+		var answer_value="answer_value_"+lqn+'_'+abc[k];
+
+		if(document.getElementById(answer_value)){
+
+			if(document.getElementById(answer_value).checked == true){
+
+				document.getElementById(answer_value).checked=false;
+			}
+		}
+	}	
+	var did='#qbtn'+qn;
+	$(did).css('backgroundColor','#c9302c');
+	$(did).css('color','#ffffff');
+}
+
+var review_later;
+function review_later(){
+	if(review_later[qn] && review_later[qn]){
+
+		review_later[qn]=0;
+		var did='#qbtn'+qn;
+		$(did).css('backgroundColor','#c9302c');
+		$(did).css('color','#ffffff');	
+	}else{
+		
+		review_later[qn]=1;
+		var did='#qbtn'+qn;
+		$(did).css('backgroundColor','#ec971f');
+		$(did).css('color','#ffffff');
+	}
+	
+}
+
+	var ctime=0;
+	var ind_time=new Array();
+	show_question('0');
+	function increasectime() {
+		ctime+=1;
+	}
+	setInterval(increasectime,1000);
+
+
+</script>

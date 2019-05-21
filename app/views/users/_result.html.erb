@@ -1,0 +1,57 @@
+<% if result.total_score.present?%>
+<div class="table-personal-information table-post-user" style="margin-top: 10px;" id="result_<%= result.id %>">
+
+
+	<div style="text-align: left;">
+		<span style="font-size: 17px; margin-bottom: 5px; font-weight: 600;"><%= result.test.name %></span>
+
+
+		<!-- dropdown -->
+
+		<div class="dropdown" style="float:right;" id="dropdown-result-<%= result.id %>">
+			<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+			<div class="dropdown-content" id="dropdown-content-<%= result.id %>">
+				<%= link_to 'Thi', user_test_details_path(current_user, result.test.id) %>
+
+				<% if current_user.id == params[:id].to_i %>
+				<%= link_to "Đáp án", user_test_results_details_path(current_user, result.test.id, result.id) %>
+				<%= link_to "Xóa", results_delete_path(result.id), remote: true, data: {confirm: "Bạn có chắc muốn xóa không?"}, method: :put %>
+				<% end %>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#dropdown-result-<%= result.id %>').click(function(){
+					$('#dropdown-content-<%= result.id %>').toggle();
+				});
+			});
+			$(document).click(function (e) {
+				e.stopPropagation();
+				var container = $("#dropdown-result-<%= result.id %>");
+
+				//check if the clicked area is dropDown or not
+				if (container.has(e.target).length === 0) {
+					$('#dropdown-content-<%= result.id %>').hide();
+				}
+			});
+		</script>
+
+		<!-- end dropdown -->
+
+		<br>
+		<span>Số câu đúng: <%= result.num_an_correct %>/<%= result.test.qbanks.size %>, Thời gian làm bài: <%= convert_to_time(result.total_time) %></span>
+	</div>
+	<div class="row">
+
+		<div class="col-sm-offset-5 col-xs-offset-4 text-center">
+			<span class="text-score">Điểm:</span>
+			<div class="score" >
+				<%= result.total_score %>/<%= result.test.full_score %>		
+			</div>
+		</div>
+	</div>
+	<span style="float: right; background: #337ab7; width: 80px;margin-top: -27px;">
+		<%= image_tag("logo.png", alt: "logo", width: "100%") %>
+	</span>
+</div>
+<% end %>

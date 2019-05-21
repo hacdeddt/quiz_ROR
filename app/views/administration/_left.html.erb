@@ -22,7 +22,7 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+     <!--  <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -30,7 +30,7 @@
               </button>
             </span>
         </div>
-      </form>
+      </form> -->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -62,8 +62,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><%= link_to 'Câu hỏi đã bị xóa', administration_qbank_deleted_path %></li>
             <li ><%= link_to 'Câu hỏi cần xét duyệt', administration_accept_qbank_path  %></li>
+            <li><%= link_to 'Câu hỏi đã bị xóa', administration_qbank_deleted_path %></li>
           </ul>
         </li> 
 
