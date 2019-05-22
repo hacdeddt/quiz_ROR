@@ -16,8 +16,20 @@
 	    <%= link_to edit_user_path(user) do %>
 	    	<i class="fa fa-pencil" aria-hidden="true"></i>
 	    <% end %>
-	    <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, remote: true do %>
-	    	<i class="fa fa-trash" aria-hidden="true"></i>
-	    <% end %>
+	    <div id="banned_<%= user.id %>" class="ban_user" style="<%= "display: block;" if !user.banned %>">
+			    <%= link_to users_banned_path(user.id), remote: true, data: {confirm: "Bạn có chắc muốn cấm không?"}, method: :put do%>
+					<i class="fa fa-ban" aria-hidden="true"></i>
+				<% end %>
+		</div>
+	   <div id="unbanned_<%= user.id %>" class="ban_user" style="<%= "display: block;" if user.banned %>">
+			    <%= link_to users_unbanned_path(user.id), remote: true, data: {confirm: "Bạn có chắc muốn bỏ cấm không?"}, method: :put do%>
+					<i class="fa fa-unlock" aria-hidden="true"></i>
+				<% end %>
+		</div>
 	</td>
 </tr>
+<style type="text/css">
+	.ban_user {
+		display: none;
+	}
+</style>

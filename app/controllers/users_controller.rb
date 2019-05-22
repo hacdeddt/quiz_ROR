@@ -1,15 +1,33 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_user, only: [:edit, :update, :show, :destroy]
+	before_action :set_user, only: [:edit, :update, :show, :destroy, :banned, :unbanned]
 
 	def index
 		num_day = params[:days]
 		if num_day.blank?
-			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at").where("id != ?",current_user.id).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at, banned").where("id != ?",current_user.id).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
 		else
-			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at").where("id != ? and created_at >= ?",current_user.id, num_day.to_i.days.ago).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
+			@users = User.select("id,fullName, image, year_birthday, gender, address, created_at, banned").where("id != ? and created_at >= ?",current_user.id, num_day.to_i.days.ago).paginate(:page => params[:page], :per_page => 10).order('created_at desc')
 		end	
 		authorize @users
+	end
+
+	def banned
+		if current_user.role
+			@user.update(banned: 1)
+			respond_to do |format|
+				format.js {flash.now[:notice] = "Đã cấm người dùng."}
+			end
+		end
+	end
+
+	def unbanned
+		if current_user.role
+			@user.update(banned: 0)
+			respond_to do |format|
+				format.js {flash.now[:notice] = "Đã bỏ cấm người dùng."}
+			end
+		end
 	end
 
 	def edit

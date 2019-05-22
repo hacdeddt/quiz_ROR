@@ -9,9 +9,16 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    @user = User.find_by(email: params['user']['email'])
+    if @user.banned
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: "Tài khoản của bạn đã bị cấm"}
+      end
+    else
+      super
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy

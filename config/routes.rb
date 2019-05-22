@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', 
   	confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' },
-  	controllers:{omniauth_callbacks: "users/omniauth_callbacks", registrations: 'users/registrations'}
+  	controllers:{omniauth_callbacks: "users/omniauth_callbacks", registrations: 'users/registrations',
+                  sessions: 'users/sessions'}
 
   root 'home#index'
 
@@ -22,6 +23,11 @@ Rails.application.routes.draw do
     get "tests/:id/details", param: :id, to:'tests#details', as: :test_details
     get "tests/:id/export_pdf", param: :id, to: "tests#export_pdf", as: :tests_export_pdf, defaults: { format: 'pdf' }
   end
+
+  put "users/banned/:id", param: :id, to: "users#banned", as: :users_banned
+  patch "users/banned/:id", param: :id, to: "users#banned"
+  put "users/unbanned/:id", param: :id, to: "users#unbanned", as: :users_unbanned
+  patch "users/unbanned/:id", param: :id, to: "users#unbanned"
   
   resources :users, only: [:index], path: 'administration/users'
   resources :users, only: [:destroy]
