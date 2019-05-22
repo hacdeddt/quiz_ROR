@@ -19,7 +19,7 @@ class TestPolicy < ApplicationPolicy
   end
 
   def show?
-    return true
+    return true if (@current_user.role || @current_user.id == @test.user.id)
   end
 
   def index?

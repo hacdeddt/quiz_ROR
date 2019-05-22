@@ -47,6 +47,10 @@
             </ul>
           </li>
         <% end %>
+        <li class="<%= (original_url == root_path) ? 'active' : ''%>" >
+          <a>Lớp</a>
+        </li>
+
         <li class="user-page <%= (original_url == user_path(current_user.id)) ? 'active' : ''%>">
           <%= link_to user_path(current_user.id), class: "link-in-navbar" do %>
             <% if current_user.image.file.nil? %>

@@ -12,6 +12,7 @@ class TestsController < ApplicationController
   end
 
   def show
+    authorize @test
   end
 
   def new
