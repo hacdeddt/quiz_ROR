@@ -5,12 +5,12 @@
 			<td>
 				Đề thi: <%= test.name %>,
 				<% if test.description.present? %>
-					Mô tả: <%= raw truncate(test.description, :length => 100) %>
+					Mô tả: <%= truncate(raw(test.description), :length => 100) %>
 				<% end %>
-				<%= link_to '... chi tiết', user_test_details_path(current_user, test.id) %>
+				<%= link_to '...chi tiết', user_test_details_path(current_user, test.id) %>
 			</td>
 			<td>
-				<div class="dropdown" style="float:right;" id="dropdown-test-<%= test.id %>">
+				<div class="dropdown" style="float:right; margin-left: 10px;" id="dropdown-test-<%= test.id %>">
 					<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
 					<div class="dropdown-content" id="dropdown-content-test-<%= test.id %>">
 						<%= link_to 'Thi', user_test_details_path(current_user, test.id) %>

@@ -21,7 +21,7 @@
               <span style="margin-left: 35px;">bởi <%= test.user.fullName %>
               <span class="label label-warning pull-right"><%= test.results_count %></span>
               <span class="product-description">
-                <%= raw truncate(test.description, :length => 100) %>
+                <%= truncate(raw(test.description), :length => 100) %>
               </span>
             
           <% end %>
