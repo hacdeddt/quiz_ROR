@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   patch "qbanks/accepted/:id", param: :id,:controller => 'qbanks', :action => 'accepted'
   put "qbanks/recover/:id", param: :id,:controller => 'qbanks', :action => 'recover' 
   patch "qbanks/recover/:id", param: :id,:controller => 'qbanks', :action => 'recover'
+  get "qbanks/reversion/:id", param: :id, to: "qbanks#reversion", as: :qbanks_reversion
 
   get "qbanks/download_file_excel_sample"
   get "administration/accept_qbank"

@@ -66,7 +66,8 @@ gem 'font-awesome-sass'
 #export file pdf
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
+#save all changes to my models
+gem 'paper_trail', '~> 10.3'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

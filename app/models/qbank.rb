@@ -1,6 +1,8 @@
 require 'digest'
 
 class Qbank < ApplicationRecord
+	has_paper_trail on: [:update]
+
 	belongs_to :category
 	belongs_to :user
 	belongs_to :subject

@@ -1,5 +1,5 @@
 class QbanksController < ApplicationController
-  before_action :set_quiz, only: [:show, :edit, :update, :destroy, :delete, :qbank_params, :accepted, :recover]
+  before_action :set_quiz, only: [:show, :edit, :update, :destroy, :delete, :qbank_params, :accepted, :recover, :reversion]
   def index
     @subjects = Subject.where("is_delete = 0")
     @categories = Category.where("is_delete = 0")
@@ -66,9 +66,8 @@ class QbanksController < ApplicationController
       @qbank.mp3.purge.nil?
     end
     respond_to do |format|
-      if @qbank.update(qbank_params) #&& verify_recaptcha(model: @qbank)
+      if @qbank.update(qbank_params) && verify_recaptcha(model: @qbank)
         if !current_user.role
-          binding.pry
           if @qbank.saved_change_to_question? || @qbank.saved_change_to_optionA? || @qbank.saved_change_to_optionB? ||
            @qbank.saved_change_to_optionC? || @qbank.saved_change_to_optionD? || @qbank.saved_change_to_answer?
             @qbank.update(accept: 0)
@@ -88,6 +87,16 @@ class QbanksController < ApplicationController
     @qbank.update(is_delete: 1)
     respond_to do |format|
       format.js {flash.now[:notice] = "Đã xóa câu hỏi."}
+    end
+  end
+
+  def reversion # quay lại bản ghi đã được chấp nhận trước đó.
+    records_accept = @qbank.versions.where_object(accept: true)
+    if records_accept.size > 1
+      records_accept[records_accept.size - 2].reify.save
+      respond_to do |format|
+        format.js {flash.now[:notice] = "Đã đảo ngược câu hỏi lại thành như cũ."}
+      end
     end
   end
 
