@@ -1,7 +1,5 @@
 class QbanksController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy, :delete, :qbank_params, :accepted, :recover]
-  after_action :approval, only: [:update]
-
   def index
     @subjects = Subject.where("is_delete = 0")
     @categories = Category.where("is_delete = 0")
@@ -68,7 +66,14 @@ class QbanksController < ApplicationController
       @qbank.mp3.purge.nil?
     end
     respond_to do |format|
-      if @qbank.update(qbank_params) && verify_recaptcha(model: @qbank)
+      if @qbank.update(qbank_params) #&& verify_recaptcha(model: @qbank)
+        if !current_user.role
+          binding.pry
+          if @qbank.saved_change_to_question? || @qbank.saved_change_to_optionA? || @qbank.saved_change_to_optionB? ||
+           @qbank.saved_change_to_optionC? || @qbank.saved_change_to_optionD? || @qbank.saved_change_to_answer?
+            @qbank.update(accept: 0)
+          end
+        end
         format.html { redirect_to user_qbank_path(current_user, @qbank), notice: 'Cập nhật câu hỏi thành công và đang được xét duyệt.' }
         format.json { render :show, status: :ok, location: @qbank }
       else
@@ -153,12 +158,6 @@ class QbanksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
       @qbank = Qbank.find(params[:id])
-    end
-
-    def approval
-      if !current_user.role
-        @qbank.update(accept: 0)
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
