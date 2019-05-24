@@ -27,4 +27,20 @@ class Test < ApplicationRecord
 		test.update(views: view)
 	end
 
+	def self.search_fulltext(name)
+    	where("MATCH (name, description) AGAINST (?) and is_delete = 0",name)
+    end
+
+    def self.filter_test(category, subject, name)
+    	if !category.present? && !subject.present? && !name.present?
+			includes([:subject, :category]).where("is_delete = 0").order("results_count desc")
+		elsif category.present? && subject.present? && !name.present?
+			includes([:subject, :category]).where("is_delete = 0 and category_id = ? and subject_id = ?", category, subject).order("results_count desc")
+		elsif name.present?
+			includes([:subject, :category]).search_fulltext(name).order("results_count desc")			
+		else
+			1
+		end
+    end
+
 end

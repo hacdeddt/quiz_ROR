@@ -1,12 +1,40 @@
-<div class="">
-	<h1>Xin chào, <%= current_user.fullName %></h1>
-	<%= link_to "Change your password", edit_user_registration_path %>
-	<%= link_to "Logout", destroy_user_session_path, method: :delete %>
-	<% if !current_user.image.file.nil? %>
-		<% begin %>
-			<%= image_tag(current_user.image_identifier) %>
-		<% rescue %>
-			<%= image_tag(current_user.image.url) %>
-		<% end %>
-	<% end %>
+<%= provide(:title, "Trang chủ") %>
+<div class="row">
+	<div class="co-xs-12 col-sm-12">
+		<div class="container-form">
+			<%= form_tag root_path, method: :post, class: "form-inline" do %>
+				<div class="form-group">
+					<p>
+						<%= select_tag :category_id, options_for_select(@categories.collect { |c| [c.name, c.id]}, params[:category_id]), include_blank: "Tất cả các lớp", :class => 'form-control' %>
+					</p>
+				</div>
+
+				<div class="form-group">
+					<p>
+						<%= select_tag :subject_id, options_for_select(@subjects.collect { |s| [s.name, s.id]}, params[:subject_id]), include_blank: "Tất cả các môn học", :class => 'form-control' %> 
+					</p>
+				</div>
+
+				<div class="form-group">
+					<p>
+						<%= submit_tag "Lọc", class: "btn btn-success" %>	
+					</p>
+				</div>
+				
+			<% end %>
+			<% if !params[:category_id].present? && !params[:subject_id].present? && !params[:name].present? %>
+				<h4 style="text-align: center;">Top các đề thi được làm nhiều nhất</h4>
+			<% end %>
+			<div class="row">
+				<% if !@tests.present? %>
+					<h4 style="text-align: center;">Không có đề thi nào</h4>
+				<% else %>
+					<div id="tests">
+						<%= render partial: "test", collection: @tests %>
+					</div>
+					<%= will_paginate @tests %>
+				<% end %>
+			</div>
+		</div>
+	</div>
 </div>

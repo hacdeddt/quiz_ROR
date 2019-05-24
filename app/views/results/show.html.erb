@@ -202,7 +202,16 @@ function submitform(){
 	<button class="btn btn-danger submit-quiz" onclick="document.getElementById('primaryButton').click()" style="margin-top:2px;" >Nộp bài</button>
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#margin-footer').removeClass('margin-footer');
+		$('.main-footer').css("position", "unset");
+		$('.main-footer').css("margin-bottom", "45px");
+	});
+	
+</script>
 <script>
+
 //nhớ đổi số câu hỏi
 var noq=<%= noq %>;
 var qn=0;

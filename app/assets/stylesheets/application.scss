@@ -50,7 +50,7 @@ html,body{
 	border-radius: 4px;
 	color: white;
 	padding:15px;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 }
 .cover-form-login a{
 	color: blue;
@@ -154,9 +154,17 @@ html,body{
 	margin-top:-23px;
 }
 
+.margin-footer {
+  height: 73px;
+}
 @media only screen and (max-width: 600px) {
+	
+	.content-feature {
+		margin-top: 0px;
+	}
 	.cover-form-login {
 		width: 100%;
+		margin-bottom: 133px;
 	}
 	.send-mail {
 		margin-left: 0px;
@@ -198,6 +206,10 @@ html,body{
 
 	.container-form { 
 		padding: 0.3em;
+	}
+
+	.margin-footer {
+	  height: 114px;
 	}
 
 }

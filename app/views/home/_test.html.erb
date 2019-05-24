@@ -1,0 +1,24 @@
+<% color = ["#f4511e", "#34e5c6", "#ede92e", "#5FC665", "#26aff0", "#d867b2", "#ed5341", "#5fc667"].sample %>
+<div class="col-xs-12 col-sm-4">					
+	<div class="container-name-test" style="background: <%= color %>; ">
+		<span class="name-test" >
+			<%= test.name %> 
+		</span>
+		<hr>
+		<div class="padding-table-test">
+			<%= test.subject.name %> - <%= test.category.name %>
+			<hr>
+			Thời gian: <%= test.duration %> phút
+			<hr>
+			Số câu hỏi: <%= test.qbanks.where("is_delete = 0").size %>
+			<hr>
+			Lượt thi: <%= test.results_count %>
+			<hr>
+			<% if user_signed_in? %>
+			<%= link_to "Làm bài", user_test_details_path(current_user, test.id),class: "btn btn-success" %>
+			<% else %>
+			<%= link_to "Làm bài", new_user_session_path, class: "btn btn-success" %>
+			<% end %>
+		</div>
+	</div>
+</div>

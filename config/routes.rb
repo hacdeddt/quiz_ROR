@@ -7,6 +7,7 @@ Rails.application.routes.draw do
                   sessions: 'users/sessions'}
 
   root 'home#index'
+  post "/", to: "home#index"
 
   resources :users, only: [:update, :edit, :show] do
   	resources :qbanks do

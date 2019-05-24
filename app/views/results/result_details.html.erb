@@ -140,7 +140,14 @@
 	<%= link_to 'Trở lại trang cá nhân', user_path(current_user.id), class: "btn btn-info", style: "margin-top:2px;" %>
 		
 </div>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#margin-footer').removeClass('margin-footer');
+		$('.main-footer').css("position", "unset");
+		$('.main-footer').css("margin-bottom", "45px");
+	});
+	
+</script>
 <script>
 //nhớ đổi số câu hỏi
 var noq=<%= noq %>;

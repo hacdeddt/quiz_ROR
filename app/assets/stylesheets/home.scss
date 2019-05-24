@@ -1,3 +1,36 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.name-test {
+	color: black; 
+	font-weight: bold; 
+	font-size: 17px; 
+	text-shadow: 1px 1px #a99f9f;
+	display: inline-block;
+  	vertical-align: middle;
+  	line-height: normal;
+}
+
+.container-name-test {
+	height: 100%; 
+	margin-top: 25px; 
+	border-top-right-radius: 7px; 
+	border-top-left-radius: 7px;
+	border: 1px solid #ebd3d2; 
+	text-align: center; 
+	line-height: 100%;
+	z-index: 1; 
+	padding-top:15px; 
+	padding-bottom: 15px;
+}
+.padding-table-test {
+	background: white;
+    margin-top: -21px;
+    padding-top: 17px;
+    margin-bottom: -15px;
+    padding-bottom: 15px;
+}
+hr {
+	margin-bottom: 12px !important;
+	margin-top: 12px !important;
+}

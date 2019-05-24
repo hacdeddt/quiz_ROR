@@ -95,6 +95,11 @@ body {
   padding: 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
+  bottom: 0px;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  margin-left: 0px;
 }
 /* Fixed layout */
 .fixed .main-header,

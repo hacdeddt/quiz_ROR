@@ -19,17 +19,9 @@
 </head>
 
 <body>
-  <% if !user_signed_in? %>
-    <div class="logo-login">
-      <%= link_to root_path do %>
-      <%= image_tag("logo.png", width: "160px", height: "60px") %>
-      <% end %>
-    </div>
-  <% else %>
     <%= render partial: "layouts/navbar" %>
     <div class="margin-top-content">
     </div>
-  <%end %>
 
   <div class="loading-bar"></div>
   
@@ -37,9 +29,10 @@
     <%= custom_bootstrap_flash %> 
   </div>
   
-  <div id="container_application" <%= "class=container" if !(original_url.include?("administration")) %> >   
+  <div id="container_application" <%= "class=container" if !(original_url.include?("administration")) %> >
     <%= yield %>
+    <div id="margin-footer" class="margin-footer"></div>
   </div>
-</div>
+<%= render "layouts/footer" %>
 </body>
 </html>

@@ -42,7 +42,8 @@ class Qbank < ApplicationRecord
 	 validates :optionB, presence: {message: "không được để trống"}
 	 validates :optionC, presence: {message: "không được để trống"}
 	 validates :optionD, presence: {message: "không được để trống"}
-	 validates :option_match, presence: {message: "chưa được chọn"}
+	 validates :option_match, format: { with: /\A[ABCD]\z/,
+  		message: "chưa được chọn"}
   	 validates :mp3, size: { less_than: 1.megabytes , message: 'phải nhỏ hơn 2MB' },
   	 content_type: { in: [ 'audio/mpeg', 'audio/x-mpeg', 'audio/mp3', 'audio/x-mp3', 
   			'audio/mpeg3', 'audio/x-mpeg3', 'audio/mpg', 'audio/x-mpg', 'audio/x-mpegaudio' ], 
@@ -78,14 +79,14 @@ class Qbank < ApplicationRecord
     	if !spreadsheet #Nếu không phải các file excel thì không cho tải lên
     		d = -1
     	else
-	    	header = spreadsheet.row(1)
+	    	header = spreadsheet.row(2)
 	    	header_model = Qbank.column_names
 	    # Kiểm tra nếu file csv lấy vào ko khớp với model được chọn
 		    if !(header - header_model).empty?
 		    	d = 0
 		    else	
 		    	ActiveRecord::Base.transaction do
-			    	(2..spreadsheet.last_row).each do |i|
+			    	(3..spreadsheet.last_row).each do |i|
 			    		if d <= 10 #nếu lớn hơn 10 bản ghi đều tồn tại thì dừng ngay vì sợ tấn công DoS
 				    		row = Hash[[header, spreadsheet.row(i)].transpose]
 				    		qbank = find_by_id(row["id"]) || new
@@ -120,4 +121,21 @@ class Qbank < ApplicationRecord
     def self.search_fulltext(question)
     	where("MATCH (question) AGAINST (?) and accept = 1 and is_delete = 0",question)
     end
+
+    def self.filter_qbanks(category_id, subject_id, user_id, name, current_user_id)
+    	eligible = "accept = 1 and is_delete = 0"
+	    if category_id.blank? && subject_id.blank? && user_id.nil? && name.blank? # cả 4 cái đều trống
+	      includes([:category, :user, :subject]).where("#{eligible}").order('created_at asc')
+	    elsif !category_id.blank? && !subject_id.blank? && user_id.nil? && name.blank? # 2 cái không trống 1 cái trống và không phải search
+	      includes([:category, :user, :subject]).where("category_id = ? and subject_id = ? and #{eligible}", category_id, subject_id).order('created_at asc')
+	    elsif !category_id.blank? && !subject_id.blank? && !user_id.nil? && name.blank? # cả 3 cái đều không trống và không phải search
+	      includes([:category, :user, :subject]).where("category_id = ? and subject_id = ? and user_id = ?", category_id, subject_id, current_user_id).order('created_at asc')
+	    elsif category_id.blank? && subject_id.blank? && !user_id.nil? && name.blank? # 2 cái trống 1 cái không trống và không phải search
+	      includes([:category, :user, :subject]).where("user_id = ?", current_user_id).order('created_at asc')
+	    elsif !name.blank? #là search
+	      includes([:category, :user, :subject]).search_fulltext(name).order('created_at asc')
+	    else
+	    	1
+	    end
+	end
 end

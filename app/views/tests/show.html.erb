@@ -190,7 +190,14 @@ window.location="<%= root_path %>"; // sau khoảng thời gian sẽ tự độn
 	<button class="btn btn-info"  onClick="javascript:clear_response();"  style="margin-top:2px;"  >Clear</button>
 	<%= link_to "Xong", user_path(current_user), class: "btn btn-danger submit-quiz" %>
 </div>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#margin-footer').removeClass('margin-footer');
+		$('.main-footer').css("position", "unset");
+		$('.main-footer').css("margin-bottom", "45px");
+	});
+	
+</script>
 <script>
 
 //nhớ đổi số câu hỏi
