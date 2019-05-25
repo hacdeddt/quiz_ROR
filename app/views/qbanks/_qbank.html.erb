@@ -2,18 +2,19 @@
 	<td>
 		<% if qbank.question.include?('<img')%>
 			<% qbank.question[qbank.question[/style=".*"/]] = '' %>
-			<%= raw qbank.question %>
+			<%= sanitize raw qbank.question %>
 		<% else %>
-			<%= raw qbank.question %>
+			<%= sanitize raw qbank.question %>
 		<% end %>
     </td>
-	<td ><%= qbank.category.name %></td>
-	<td ><%= qbank.subject.name %></td>
+	<td ><%= qbank.category.name %>/<%= qbank.subject.name %></td>
+	
 	<td >
 		<%= link_to user_path(qbank.user.id) do %>
 			<%= qbank.user.fullName %>
 		<% end %>
 	</td>
+	<td ><%= qbank.created_at.strftime("%d/%m/%Y") %></td>
 	<td><%= qbank.tests.size %></td>
 	<td><%= accepted(qbank.accept) %></td>
 	<td>

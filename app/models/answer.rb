@@ -3,6 +3,10 @@ class Answer < ApplicationRecord
 	belongs_to :result
 	belongs_to :qbank
 
+	validates :qbank_id, format: {with: "/\A[0-9]+\z/"}
+	validates :result_id, format: {with: "/\A[0-9]+\z/"}
+	validates :test_id, format: {with: "/\A[0-9]+\z/"}
+
 	def self.calculate(test_id, noq, qbank_id, q_option, user_id, result_id)
 		score = (Test.find(test_id).full_score.to_f / noq.to_i).round(2)
 		number_answer_correct = 0

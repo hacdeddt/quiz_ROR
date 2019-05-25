@@ -68,7 +68,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 #save all changes to my models
 gem 'paper_trail', '~> 10.3'
-
+#gem protect application
+gem 'rack-protection', '~> 2.0', '>= 2.0.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

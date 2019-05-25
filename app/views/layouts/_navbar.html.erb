@@ -83,6 +83,7 @@
           </ul>
         </li>
         <% else %>
+          <li class="<%= (original_url == root_path) ? 'active' : ''%>"><%= link_to "Trang Chủ", root_path %></li>
           <li class="<%= (original_url == new_user_session_path) ? 'active' : ''%>"><%= link_to "Đăng Nhập", new_user_session_path %></li>
           <li class="<%= (original_url == new_user_registration_path) ? 'active' : ''%>"><%= link_to "Đăng Ký", new_user_registration_path %></li>
         <% end %>

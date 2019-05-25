@@ -3,40 +3,43 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 background-quiz">
 			<div style="margin: 0px 30px;">
-			<span class="bold">ID</span> <%= @qbank.id %>: 
+				<p><span class="bold">ID</span> <%= @qbank.id %>: 
 
-			<% if @qbank.mp3.attached?  %>
-					<audio controls>
-						<source src="<%= url_for(@qbank.mp3) %>" type="audio/mpeg">
-							Your browser does not support the audio element.
-					</audio>
-			<% end %>
+				<% if @qbank.mp3.attached?  %>
+						<audio controls>
+							<source src="<%= url_for(@qbank.mp3) %>" type="audio/mpeg">
+								Your browser does not support the audio element.
+						</audio>
+				<% end %>
 
-			<%= raw @qbank.question %>
+				<%= sanitize raw @qbank.question %></p>
 			<p>
 				<span <%="class=answer-correct" if @qbank.option_match == "A" %> >
-					A. <%= raw @qbank.optionA %>
+					A. <%= sanitize raw @qbank.optionA %>
 				</span>
 			</p>
 			<p >
 				<span <%="class=answer-correct" if @qbank.option_match == "B" %> >
-					B. <%= raw @qbank.optionB %>
+					B. <%= sanitize raw @qbank.optionB %>
 				</span>
 			</p>
 			<p><span <%="class=answer-correct" if @qbank.option_match == "C" %> >
-				C. <%= raw @qbank.optionC %>
+				C. <%= sanitize raw @qbank.optionC %>
 				</span>
 			</p>
 			<p>
 				<span <%="class=answer-correct" if @qbank.option_match == "D" %> >
-					D. <%= raw @qbank.optionD %>
+					D. <%= sanitize raw @qbank.optionD %>
 				</span>
 			</p>
 			<br>
 			<div>
-				<span class="bold">Đáp án chi tiết: </span>
-					<%= raw @qbank.answer %>.
+				<% if @qbank.answer.present? %>
+					<span class="bold">Đáp án chi tiết: </span>
+						<%= sanitize raw @qbank.answer %>.
+				<% end %>
 			</div>
+			<p>Tạo ngày: <%= @qbank.created_at.strftime("%d/%m/%Y") %></p>
 			<br>
 			<table class="table">
 				<thead>

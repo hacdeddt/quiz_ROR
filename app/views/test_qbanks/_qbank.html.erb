@@ -1,12 +1,12 @@
 <tr>
-	<td ><%= raw qbank.question %></td>
-	<td ><%= qbank.category.name %></td>
-	<td ><%= qbank.subject.name %></td>
+	<td ><%= sanitize raw qbank.question %></td>
+	<td ><%= qbank.category.name %>/<%= qbank.subject.name %></td>
 	<td >
 		<%= link_to user_path(qbank.user.id) do %>
 			<%= qbank.user.fullName %>
 		<% end %>
 	</td>
+	<td ><%= qbank.created_at.strftime("%d/%m/%Y") %></td>
 	<td><%= qbank.tests.size %></td>
 	<td>
 		

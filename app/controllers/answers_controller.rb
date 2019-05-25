@@ -7,7 +7,10 @@ class AnswersController < ApplicationController
   # POST /answers
   # POST /answers.json
   def create
-    Answer.calculate(params[:test_id], params[:noq], params[:qbank_id], params[:q_option], params[:user_id], params[:result_id])
+    @qbank_id = sanitize params[:qbank_id]
+    @result_id = sanitize params[:result_id]
+    @noq = Test.find(params[:test_id]).qbanks.where("accept = 1")
+    Answer.calculate(params[:test_id], @noq, @qbank_id, params[:q_option], current_user.id, @result_id)
       respond_to do |format|
           format.html { 
             redirect_to user_test_results_details_path(current_user.id, params[:test_id], params[:result_id]), 
