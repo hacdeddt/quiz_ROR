@@ -27,4 +27,8 @@ class UserPolicy < ApplicationPolicy
   def index?
     return true if user.role
   end
+
+  def admin?
+    return true if user.role
+  end
 end

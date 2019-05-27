@@ -1,5 +1,5 @@
 class ResultsController < ApplicationController
-  before_action :set_result, only: [:show, :destroy, :delete]
+  before_action :set_result, only: [:show, :destroy, :delete, :result_details]
 
   # GET /results
   # GET /results.json
@@ -46,6 +46,7 @@ class ResultsController < ApplicationController
   end
 
   def result_details
+    authorize @result
     @test = Test.find(params[:test_id])
   end
 

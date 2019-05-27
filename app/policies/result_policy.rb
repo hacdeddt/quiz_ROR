@@ -13,4 +13,9 @@ class ResultPolicy < ApplicationPolicy
   def delete?
     return true if (@current_user.role || @current_user.id == @result.user.id)
   end
+
+  def result_details?
+    return true if (@current_user.role || @current_user.id == @result.user.id)
+    binding.pry
+  end
 end
