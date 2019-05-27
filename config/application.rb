@@ -19,8 +19,8 @@ module Quiz
     config.autoload_paths += %w(#{config.root}/app/models/ckeditor)
 
     config.middleware.use Rack::Protection
-    config.httponly = true
 
+    config.assets.precompile << %w( *.scss *.js )
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

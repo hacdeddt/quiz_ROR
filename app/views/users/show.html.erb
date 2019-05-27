@@ -38,8 +38,12 @@
 				<button class="btn btn-large btn-block btn-primary" id="view_all_tests">Xem tất cả các đề thi</button>
 			<% end %>
 		</div>
-		<div class="col-xs-12 col-sm-6" id="results">	
-			<div style="margin-top: -10px"></div>
+		<div class="col-xs-12 col-sm-6" id="results">
+			<div class="table-personal-information table-post-user">
+				<%= link_to "Ngân hàng câu hỏi", user_qbanks_path(current_user), class: "btn btn-primary" %>
+				<%= link_to "Thêm đề thi", new_user_test_path(current_user), class: "btn btn-primary" %>
+			</div>
+			<div></div>
 			<%= render partial: "result", collection: @results %>
 			<%= will_paginate @results %>
 		</div>

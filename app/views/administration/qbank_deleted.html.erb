@@ -37,13 +37,11 @@
 									</td>
 									<td>Đáp án: <%= raw q.answer %></td>
 									<td >
-										<a rel="nofollow" id="" data-remote="true" data-method="put" href="/qbanks/accepted/<%= q.id %>"><i class="fa fa-check-circle" aria-hidden="true"></i></a>&nbsp;&nbsp;|
+										<a rel="nofollow" id="" data-remote="true" data-method="put" href="/qbanks/recover/<%= q.id %>"><i class="fa fa-undo" aria-hidden="true"></i>
+										</a>&nbsp;&nbsp;|
 										<%= link_to user_qbank_path(current_user, q), method: :delete, remote: true do %>
 										<i class="fa fa-times" aria-hidden="true"></i>
-										<%end %>
-										<br>
-										<a rel="nofollow" id="" data-remote="true" data-method="put" href="/qbanks/recover/<%= q.id %>"><i class="fa fa-undo" aria-hidden="true"></i>
-										</a>
+										<%end %>								
 									</td>
 								</tr>
 								<% end %>

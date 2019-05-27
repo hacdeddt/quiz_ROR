@@ -102,15 +102,12 @@ function submitform(){
 			<div class="col-md-8">
 				
 				<%= form_tag user_test_result_answers_path(current_user.id, params[:test_id], params[:id]), id: "quiz_form", class: "form-inline import_qbank" do %>
-
-					<input type="hidden" name="result_id" value="<%= params[:id] %>">
-
+				
 					<% 	abc= ['A','B','C','D']
 					@test.qbanks.includes(mp3_attachment: :blob).where("accept = 1").each_with_index do |qbank, qk| %>
 					<div id="q<%= qk %>" class="question_div">
 					<input type="hidden" name="qbank_id[<%= qk %>]" value="<%= qbank.id %>">
 					
-
 						<div class="question_container" >
 							<span style="vertical-align: top">Câu hỏi <%= qk + 1 %>: </span>
 							<% if qbank.mp3.attached?  %>

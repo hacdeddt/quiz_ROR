@@ -10,23 +10,21 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require toastr
- *= require bootstrap
  *= require AdminLTE
  *= require skin-blue
  *= require blue
  *= require ionicons
  *= require_self
+ *= require_tree .
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "toastr";
-@import "font-awesome-sprockets";
 @import "font-awesome";
 
 html,body{
-	background: #ecf0f5;
+	background: #ecf0f5 !important;
 	background-size: cover;
 	background-repeat: repeat;
 	height: 100%;
@@ -183,7 +181,7 @@ html,body{
 	.button-search{
 		margin-top: -67px;
     	margin-left: 236px;
-    	display: none;
+    	display: none !important;
 	}
 
 	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
@@ -201,7 +199,7 @@ html,body{
 
 	.nav-toggle-in-mobile {
 		background: #3c8dbc;
-    	margin-top: 30px;
+    	margin-top: 30px !important;
 	}
 
 	.container-form { 

@@ -22,13 +22,23 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.precompile += %w( *.css *.erb *.scss *.js *.coffee *.png *.jpg *.ico *.gif)
   config.assets.compile = true
+  config.assets.precompile += %w( *.erb application.scss application.js *.png *.jpg *.ico *.gif)
+  # cái này nhớ là phải là application.scss và application.js, vì nó sẽ biên dịch 2 cái này, trong
+  # 2 cái này lại bao gồm tất cả các file css và js con. Vì vậy, nếu để *.scss và *.js nó sẽ biên
+  # dịch các file 2 lần, như thế sẽ lỗi. Nhớ nhé
+  # lệnh chạy server trong môi trường production kèm theo cả SSL:
+  #RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s -b "ssl://0.0.0.0:3000?key=quizhub.com2-key.pem&cert=quizhub.com2.pem"
+  # à quên, nhớ là trước khi chạy server phải biên dịch các file assets trước nhé.
+  # lệnh này để xóa thư mục assets trong public: rails assets:clobber
+  # lệnh này để biên dịch lại: RAILS_ENV=production rails assets:precompile
+  # thêm link hướng dẫn tạo rails secret và thêm: https://gist.github.com/rwarbelow/40bd72b2aee8888d6d91
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -114,4 +124,12 @@ Rails.application.configure do
       :password           => ENV['GMAIL_PASSWORD'],
       :enable_starttls_auto => true
     }
+
+    # SSL protocol
+    config.force_ssl = true
+
+    # Redis
+    config.cache_store = :redis_cache_store, {driver: :hiredis, url: "redis://quizhub.com:6379/0" }
+    config.action_controller.perform_caching = true
+    config.session_store :cache_store, key: "_quiz_session"
 end

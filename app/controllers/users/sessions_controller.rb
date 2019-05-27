@@ -13,7 +13,7 @@ class Users::SessionsController < Devise::SessionsController
     @user = User.find_by(email: params['user']['email'])
     if @user.banned
       respond_to do |format|
-        format.html { redirect_to root_path, alert: "Tài khoản của bạn đã bị cấm"}
+        format.html { redirect_to new_user_session_path, alert: "Tài khoản của bạn đã bị cấm"}
       end
     else
       super

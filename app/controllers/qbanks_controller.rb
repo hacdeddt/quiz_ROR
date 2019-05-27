@@ -83,7 +83,7 @@ class QbanksController < ApplicationController
   end
 
   def reversion # quay lại bản ghi đã được chấp nhận trước đó.
-    records_accept = @qbank.versions.where_object(accept: true)
+    records_accept = @qbank.versions.where_object(accept: true).includes(:item)
     if records_accept.size > 1
       records_accept[records_accept.size - 2].reify.save
       respond_to do |format|

@@ -31,6 +31,8 @@ module ApplicationHelper
       s = ((total_time - total_time.to_i)*60).to_i.to_s
       m = total_time.to_i.to_s 
       return  m+' phút '+s+ ' giây'
+    elsif total_time == 1.0
+      return '1 phút'
     else
       s = (total_time *60).to_i.to_s
       return  s+ ' giây'

@@ -32,14 +32,14 @@
 			</div>
 
 			<div style="clear:both;"></div>
-			<% noq = @test.qbanks.size %>
+			<% noq = @test.qbanks.where("accept = 1").size %>
 		</div>
 
 		<br>
 		<div class="row"  style="margin-top:5px;">
 			<div class="col-md-8">
 					<% 	abc= ['A','B','C','D']
-					@test.qbanks.includes(mp3_attachment: :blob).each_with_index do |qbank, qk| %>
+					@test.qbanks.includes(mp3_attachment: :blob).where("accept = 1").each_with_index do |qbank, qk| %>
 					<div id="q<%= qk %>" class="question_div">
 						<div class="question_container" >
 							<span style="vertical-align: top">Câu hỏi <%= qk + 1 %>: </span>
@@ -49,7 +49,7 @@
 										Your browser does not support the audio element.
 								</audio>
 							<% end %>
-							<%= raw qbank.question %>
+							<%= sanitize raw qbank.question %>
 						</div>
 						<div class="option_container" >
 							<% answer = Answer.find_by(qbank_id: qbank.id, result_id: params[:id]) %>
@@ -65,41 +65,41 @@
 							<% end %>
 						  <% end %>
 								<div class="op">
-									<span 
+									<p 
 										<%="class=answer-correct" if qbank.option_match == "A" %> 
 										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'A' %> 
 									>
-										A) <%= raw qbank.optionA %>
-									</span>
+										A) <%= sanitize raw qbank.optionA %>
+									</p>
 								</div>
 						
 								<div class="op">
-									<span <%="class=answer-correct" if qbank.option_match == "B" %> 
+									<p <%="class=answer-correct" if qbank.option_match == "B" %> 
 										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'B' %>
 									>
-										B)  <%= raw qbank.optionB %>
-									</span>
+										B)  <%= sanitize raw qbank.optionB %>
+									</p>
 								</div>
 
 								<div class="op"> 
-									<span <%="class=answer-correct" if qbank.option_match == "C" %> 
+									<p <%="class=answer-correct" if qbank.option_match == "C" %> 
 										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'C' %>
 									>
-										C) <%= raw qbank.optionC %> 
-									</span>
+										C) <%= sanitize raw qbank.optionC %> 
+									</p>
 								</div>
 
 								<div class="op">
-									<span <%="class=answer-correct" if qbank.option_match == "D" %> 
+									<p <%="class=answer-correct" if qbank.option_match == "D" %> 
 										<%="class=answer-incorrect" if !answer.nil? && answer.q_option != qbank.option_match && answer.q_option == 'D' %>
 									>
-										D) <%= raw qbank.optionD %> 
-									</span>
+										D) <%= sanitize raw qbank.optionD %> 
+									</p>
 								</div>				
 						</div> 
 						<div>
 							<% if qbank.answer.present? %>
-								<span style="font-weight: 600">Đáp án chi tiết:</span> <%= raw qbank.answer %>
+								<span style="font-weight: 600">Đáp án chi tiết:</span> <%= sanitize raw qbank.answer %>
 							<% end %>
 						</div>
 					</div>

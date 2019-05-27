@@ -1,3 +1,3 @@
-$('#add_<%= @qbank_id %>').hide();
+$('#add_<%= @qbank_id %>').remove();
 $('#destroy_<%= @qbank_id %>').html('<%= j link_to "Xóa", user_test_test_qbank_path(@current_user_id, @test_id, @test_bank_id ), method: :delete, remote: true, class: "btn btn-danger" %>').show();
 $('#flash').html('<%= j custom_bootstrap_flash %>');

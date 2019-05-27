@@ -44,34 +44,34 @@ class Qbank < ApplicationRecord
 	 validates :optionD, presence: {message: "không được để trống"}
 	 validates :option_match, format: { with: /\A[ABCD]\z/,
   		message: "chưa được chọn"}
-  	 validates :mp3, size: { less_than: 1.megabytes , message: 'phải nhỏ hơn 2MB' },
+  	 validates :mp3, size: { less_than: 1.megabytes , message: 'phải nhỏ hơn 1MB' },
   	 content_type: { in: [ 'audio/mpeg', 'audio/x-mpeg', 'audio/mp3', 'audio/x-mp3', 
   			'audio/mpeg3', 'audio/x-mpeg3', 'audio/mpg', 'audio/x-mpg', 'audio/x-mpegaudio' ], 
   			message: 'đây không phải là một file âm thanh.' }
 
-	 validate :check_url
+	 # validate :check_url
 
-    def check_url
-    	regex_url = /<a.*href=("|').*('|").*>/
-      if question.match(regex_url)
-        errors.add :question, "không được chứa url."
-      end
-      if optionA.match(regex_url)
-        errors.add :optionA, "không được chứa url."
-      end
-      if optionB.match(regex_url)
-        errors.add :optionB, "không được chứa url."
-      end
-      if optionC.match(regex_url)
-        errors.add :optionC, "không được chứa url."
-      end
-      if optionD.match(regex_url)
-        errors.add :optionD, "không được chứa url."
-      end
-      if answer.match(regex_url)
-        errors.add :answer, "không được chứa url."
-      end
-    end
+    # def check_url
+    # 	regex_url = /<a.*href=("|').*('|").*>/
+    #   if question.match(regex_url)
+    #     errors.add :question, "không được chứa url."
+    #   end
+    #   if optionA.match(regex_url)
+    #     errors.add :optionA, "không được chứa url."
+    #   end
+    #   if optionB.match(regex_url)
+    #     errors.add :optionB, "không được chứa url."
+    #   end
+    #   if optionC.match(regex_url)
+    #     errors.add :optionC, "không được chứa url."
+    #   end
+    #   if optionD.match(regex_url)
+    #     errors.add :optionD, "không được chứa url."
+    #   end
+    #   if answer.match(regex_url)
+    #     errors.add :answer, "không được chứa url."
+    #   end
+    # end
 
     def self.import(file, category_id, subject_id, user_id)
     	d = 1

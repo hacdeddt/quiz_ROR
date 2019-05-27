@@ -12,17 +12,26 @@ class TestQbanksController < ApplicationController
     subject_id = params[:subject_id]
     user_id = params[:of_me]
     name = params[:name]
+    
+    eligible = "accept = 1 and is_delete = 0"
+    
     if category_id.blank? && subject_id.blank? && user_id.nil? && name.blank?
       @qbanks = Test.find(params[:test_id]).qbanks.includes([:category, :user, :subject]).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+      if !@qbanks.present? # cả 4 cái đều trống
+        @qbanks = Qbank.includes([:category, :user, :subject]).where("#{eligible}").paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+      end
+    elsif !category_id.blank? && !subject_id.blank? && user_id.nil? && name.blank? # 2 cái không trống 1 cái trống và không phải search
+      @qbanks = Qbank.includes([:category, :user, :subject]).where("category_id = ? and subject_id = ? and #{eligible}", category_id, subject_id).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    elsif !category_id.blank? && !subject_id.blank? && !user_id.nil? && name.blank? # cả 3 cái đều không trống và không phải search
+      @qbanks = Qbank.includes([:category, :user, :subject]).where("category_id = ? and subject_id = ? and user_id = ? and #{eligible}", category_id, subject_id, current_user.id).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    elsif category_id.blank? && subject_id.blank? && !user_id.nil? && name.blank? # 2 cái trống 1 cái không trống và không phải search
+      @qbanks = Qbank.includes([:category, :user, :subject]).where("user_id = ? and #{eligible}", current_user.id).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
+    elsif !name.blank? #là search
+      @qbanks = Qbank.includes([:category, :user, :subject]).search_fulltext(name).paginate(:page => params[:page], :per_page => 20).order('created_at asc')
     else
-        value = Qbank.filter_qbanks(category_id, subject_id, user_id, name, current_user.id)
-        if value == 1
-          redirect_to user_test_test_qbanks_path(current_user, params[:test_id]), alert: "Phải chọn cả lớp và môn học cùng lúc!"
-        else
-          @qbanks = value.paginate(:page => params[:page], :per_page => 20)
-        end
+      redirect_to user_qbanks_path(current_user), alert: "Phải chọn cả lớp và môn học cùng lúc!"
     end
-
+    
     respond_to do |format|
       format.html
       format.js

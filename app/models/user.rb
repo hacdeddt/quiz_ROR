@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
 
     def image_size_validation
-      errors[:image] << "Nên nhỏ hơn 1MB" if image.size > 1.megabytes
+      errors[:image] << "nên nhỏ hơn 1MB" if image.size > 1.megabytes
     end
 
     def self.new_with_session params, session
@@ -66,7 +66,8 @@ class User < ApplicationRecord
 
     def self.from_omniauth(auth)
      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-       user.email = auth.info.email
+      user.email = auth.info.email
+      user.password = Devise.friendly_token #password bằng 1 chuỗi 20 ký tự ngẫu nhiên và không lặp lại
 	    user.fullName = auth.info.name   # assuming the user model has a name
 	    user.remote_image_url = auth.info.image # assuming the user model has an image
 	    user.year_birthday = auth.extra.raw_info.birthday if auth.extra.raw_info.birthday.present?
@@ -78,11 +79,11 @@ class User < ApplicationRecord
 	  end
   end
 
-  def password_required?
-  	super && provider.blank?
-  end
-
 # Đổi mật khẩu cho những người dùng đăng nhập bằng facebook, tức là không có mật khẩu.
+  # def password_required?
+  # 	super && provider.blank?
+  # end
+
   # def update_with_password(params, *option)
   # 	if encrypted_password.blank?
   # 		update_attributes(params, *option)

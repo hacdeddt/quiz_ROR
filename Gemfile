@@ -62,7 +62,7 @@ gem 'therubyracer', '~> 0.12.3'
 # kiểm tra các bản vá, bản cập nhật của gem
 gem 'bundler-audit', '~> 0.6.1'
 # font-awesome
-gem 'font-awesome-sass'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
 #export file pdf
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -70,6 +70,9 @@ gem 'wkhtmltopdf-binary'
 gem 'paper_trail', '~> 10.3'
 #gem protect application
 gem 'rack-protection', '~> 2.0', '>= 2.0.5'
+#redis
+gem 'redis'
+gem 'hiredis'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
