@@ -16,6 +16,5 @@ class ResultPolicy < ApplicationPolicy
 
   def result_details?
     return true if (@current_user.role || @current_user.id == @result.user.id)
-    binding.pry
   end
 end
