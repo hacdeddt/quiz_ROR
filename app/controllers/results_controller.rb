@@ -11,7 +11,11 @@ class ResultsController < ApplicationController
   # GET /results/1
   # GET /results/1.json
   def show
-    @test = Test.find(params[:test_id])
+    if @result.total_time.present?
+      redirect_to root_path
+    else
+      @test = Test.find(params[:test_id])
+    end
   end
 
   # POST /results

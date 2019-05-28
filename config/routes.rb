@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :tests do 
       resources :test_qbanks, except: [:edit, :update, :show]
       resources :results, path: :examine, only: [:create, :show] do
-        resources :answers, only: [:show, :create]
+        resources :answers, only: [:create]
       end
       get "results/:id/result_details", param: :id, to: 'results#result_details', as: :results_details
     end
