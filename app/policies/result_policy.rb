@@ -7,7 +7,7 @@ class ResultPolicy < ApplicationPolicy
   end
 
   def destroy?
-  	return true if (@current_user.role || @current_user.id == @result.user.id)
+  	return true if @current_user.role
   end
 
   def delete?
@@ -16,5 +16,9 @@ class ResultPolicy < ApplicationPolicy
 
   def result_details?
     return true if (@current_user.role || @current_user.id == @result.user.id)
+  end
+
+  def index?
+    return true if @current_user.role
   end
 end

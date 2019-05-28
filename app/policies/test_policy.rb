@@ -15,7 +15,7 @@ class TestPolicy < ApplicationPolicy
   end
 
   def destroy?
-  	return true if (@current_user.role || @current_user.id == @test.user.id)
+  	return true if @current_user.role
   end
 
   def show?

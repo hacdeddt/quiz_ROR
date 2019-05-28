@@ -83,11 +83,13 @@ class QbanksController < ApplicationController
   end
 
   def reversion # quay lại bản ghi đã được chấp nhận trước đó.
-    records_accept = @qbank.versions.where_object(accept: true).includes(:item)
-    if records_accept.size > 1
-      records_accept[records_accept.size - 2].reify.save
-      respond_to do |format|
-        format.js {flash.now[:notice] = "Đã đảo ngược câu hỏi lại thành như cũ."}
+    if current_user.role
+      records_accept = @qbank.versions.where_object(accept: true).includes(:item)
+      if records_accept.size > 1
+        records_accept[records_accept.size - 2].reify.save
+        respond_to do |format|
+          format.js {flash.now[:notice] = "Đã đảo ngược câu hỏi lại thành như cũ."}
+        end
       end
     end
   end
