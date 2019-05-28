@@ -5,7 +5,7 @@ class ResultsController < ApplicationController
   # GET /results.json
   def index
     @results = Result.where("is_delete = 0")
-    @authorize @results
+    authorize @results
   end
 
   # GET /results/1
