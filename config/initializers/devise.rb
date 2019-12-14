@@ -298,7 +298,7 @@ Devise.setup do |config|
    config.sign_in_after_change_password = false
 
    #login by facebook
-   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], 
+   config.omniauth :facebook, '453138738824792', '1363c1d63112a5a0a01d77c3956db06c', #ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], 
                               scope: 'public_profile,email,user_birthday,user_location,user_gender',
                               info_fields: 'email, name, gender,birthday,location',
                               image_size: {width: 600, height: 600}

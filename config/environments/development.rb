@@ -91,7 +91,7 @@ Rails.application.configure do
     end
 
     # SSL protocol
-    config.force_ssl = true
+    # config.force_ssl = true
 
     # Redis
     config.cache_store = :redis_cache_store, {driver: :hiredis, url: "redis://quizhub.com:6379/0" }
