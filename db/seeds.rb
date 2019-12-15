@@ -11,8 +11,8 @@ option_match = ['A', 'B', 'C', 'D']
 
 ActiveRecord::Base.transaction do
   puts "== Create Admin =="
-  # User.create!(email: 'admin@example.com', password: 'Abc123456', fullName: 'Admin', gender: 'male',
-  #   year_birthday: '6-9-1996', role: 1, address: 'Hanoi')
+  User.create!(email: 'admin@example.com', password: 'Abc123456', fullName: 'Admin', gender: 'male',
+    year_birthday: '6-9-1996', role: 1, address: 'Hanoi')
 
   puts "== Create User =="
   (1..5).each do |n|
